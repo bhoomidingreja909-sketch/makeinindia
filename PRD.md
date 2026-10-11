@@ -1,6 +1,6 @@
 # PRD — Make in India: Redesigned Portal (v0.1 DRAFT for approval)
 
-**Author:** Bhoomi (TY BBA) · **Subject:** Digital Marketing & AI · **Status:** Awaiting approval before build
+**Author:** Bhoomi (TY BBA) · **Subject:** Digital Marketing & AI · **Status:** APPROVED by author — v0.2 build in progress (palette updated)
 **Stack (approved):** Next.js (App Router, TypeScript) + Supabase (Postgres) · server-side news route
 
 ---
@@ -121,8 +121,12 @@ Browser calls would expose the key and hit CORS/rate limits. Solution: Next.js R
 
 ---
 
-## 8. Design language [AI]
-Formal, "tricolour-aware" but not clichéd: deep navy (#0B2545) + saffron accent (#FF9933) + green (#138808) used sparingly on off-white; typography pairing a serif display (e.g. Fraunces) with Inter; **quirky touches**: gear/circuit line-icons per sector, subtle "Ashoka-chakra" loader, hover-tilt cards, animated count-up (only for *sourced* figures), marquee of sector icons. Accessible: WCAG 2.1 AA contrast, keyboard navigable accordions/sliders, `prefers-reduced-motion` respected. Responsive 360 px → desktop. Dark mode optional stretch.
+## 8. Design language (UPDATED — author-specified palette)
+Palette chosen by the author: **#BA1200** (red, accent/CTA) · **#031927** (deep navy, header/hero/text) · **#9DD1F1** (sky) · **#508AA8** (steel) · **#C8E0F4** (mist). `#F6FAFD` is a derived near-white tint of mist used as the page background. Saffron/green from v0.1 were removed.
+
+Contrast rules (computed, WCAG AA): red on near-white ≈ 6.6:1 → fine for text and buttons; steel on near-white ≈ 3.7:1 → large text/decoration only; red *text* on navy ≈ 2.7:1 → not allowed, so on dark surfaces red is used only as a button/underline fill with white text.
+
+Formal-but-quirky: serif display headings, navy hero with a steel ring, hand-drawn wavy/scribble underlines, tilted "sticker" badges, sector emoji icons that wiggle on hover, a scrolling sector marquee, cursor-tilt policy cards. Accessible: skip link, visible focus, keyboard-operable slide-over (Esc closes), `prefers-reduced-motion` respected, responsive from 360 px (verified: no horizontal overflow at 375 px).
 
 ## 9. Data model (Supabase)
 ```
@@ -194,7 +198,7 @@ Milestones: M1 scaffold+design system → M2 sectors+news API (mocked) → M3 po
 2. Create a free **GNews** account + (optional) **data.gov.in** account; rotate the leaked key.
 3. Is the deployment a non-commercial academic demo? (affects free-tier eligibility)
 4. Provide 5–10 startup names you want featured (or let me propose candidates, which you must verify before they go live).
-5. Confirm or adjust the colour/typography direction in §8.
+5. ~~Colour direction~~ — resolved: author palette applied (§8).
 6. Approve this PRD → I start M1.
 
 ## Sources consulted (search snippets only; pages not fully readable here)

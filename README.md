@@ -28,6 +28,13 @@ Without keys the site still runs: the news panel says the feed is not configured
 3. Project Settings → API Keys: copy the **Project URL** → `SUPABASE_URL`, and the **secret key** (`sb_secret_…`) → `SUPABASE_SECRET_KEY` (server-only; a legacy `service_role` key in `SUPABASE_SERVICE_ROLE_KEY` also works). The publishable/anon key is **not** used: the forms write from the server, and the tables deliberately have no public policies.
 4. Alternative to pasting SQL: `supabase login`, `supabase link --project-ref <ref>`, `supabase db push` applies `supabase/migrations/`.
 
+## 2b. Daily Invest India articles (optional, no API key needed)
+Invest India's `robots.txt` allows crawling (`User-agent: *`, `Allow: /`; checked by the author). `npm run ingest` crawls its sitemap politely and stores only **title + short excerpt + date + link** in Supabase; the news feeds then show them, credited to Invest India, next to any GNews/PIB items.
+1. Run the second migration: `supabase/migrations/20261012000000_ingested_articles.sql` (SQL editor or `supabase db push`).
+2. Test on your machine first: `npm run ingest -- --dry` (crawls and prints, writes nothing), then `npm run ingest`.
+3. Make it daily: GitHub repo → Settings → Secrets and variables → Actions → add `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `INGEST_CONTACT`. The workflow `.github/workflows/ingest.yml` runs every day at 08:00 IST (you can also run it by hand from the Actions tab).
+Safety rules built in: obeys robots.txt (stops if it cannot read it), identifies itself, waits 1.5 s between requests, fetches at most 30 pages a run, skips pages already stored, never invents a date, and never stores full article text. Please also read Invest India's Terms of Use. If a page's content only appears after JavaScript runs, the log says "no title/date found"; send me that output and I will adapt the extractor.
+
 ## 3. Deploy (Vercel or Netlify)
 - **Vercel:** import the GitHub repo → Framework preset *Next.js* → Settings → Environment Variables: add every name from `.env.example` → Deploy.
 - **Netlify:** Add new site → Import from Git → build command `npm run build` (the Next.js runtime is detected automatically) → Site settings → Environment variables: add the same names → Deploy.

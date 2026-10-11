@@ -146,6 +146,9 @@ Browser calls would expose the key and hit CORS/rate limits. Solution: Next.js R
 
 ---
 
+### 7.4 Daily Invest India ingest (added at the author's request)
+`robots.txt` of investindia.gov.in was checked by the author: `User-agent: *` / `Allow: /` with a sitemap. A scheduled job (GitHub Actions, daily) reads the sitemap, fetches up to 30 new article pages, and stores title + ≤220-character excerpt + date + link in `ingested_articles` (Supabase). Items are credited to Invest India and tagged "Govt release". Guardrails: honours robots.txt and fails closed if unreadable; identifying User-Agent; 1.5 s delay; page cap; no invented dates; no full text. The author must also read Invest India's Terms of Use (not yet checked). This works without a GNews key and complements it.
+
 ## 8. Design language (UPDATED — author-specified palette)
 Palette chosen by the author: **#BA1200** (red, accent/CTA) · **#031927** (deep navy, header/hero/text) · **#9DD1F1** (sky) · **#508AA8** (steel) · **#C8E0F4** (mist). `#F6FAFD` is a derived near-white tint of mist used as the page background. Saffron/green from v0.1 were removed.
 

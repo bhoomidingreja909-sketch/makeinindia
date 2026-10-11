@@ -23,6 +23,7 @@ export default function AboutData() {
           <li>The provider can delay articles (the free plan by roughly 12 hours), so this is <b>not</b> a real-time feed.</li>
           <li>Stories are filtered by sector keywords and de-duplicated. Each headline links to the publisher&apos;s original article.</li>
           <li>Where configured, official Press Information Bureau releases are mixed in and tagged &ldquo;Govt release&rdquo;.</li>
+          <li>Once a day, a polite crawler (which obeys robots.txt) collects the title, a short excerpt, the date and the link of Invest India blog/news pages. They are shown credited to Invest India and always link back to the original; full text is never copied.</li>
         </ul>
         <h2 style={{ marginTop: 32 }}>Startup stories</h2>
         <p>Every line is traceable to a linked source with a retrieval date. A story is marked verified only after the author has checked each line.</p>

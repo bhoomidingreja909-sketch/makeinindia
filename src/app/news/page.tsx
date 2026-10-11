@@ -9,7 +9,7 @@ export default function News() {
       <div className="page-head"><div className="wrap">
         <span className="eyebrow">News dashboard</span>
         <h1>Latest headlines, by sector</h1>
-        <p className="lede">Headlines are fetched from a news API and cached. They are <em>not</em> live — the provider can delay articles — so each view shows when it last updated.</p>
+        <p className="lede">Articles are collected once a day from public pages and credited to their source. They are <em>not</em> live, so each view shows when it last updated.</p>
       </div></div>
       <div className="wrap block"><NewsDashboard /></div>
     </>

@@ -84,7 +84,7 @@ export default function Home() {
       <section className="block wrap">
         <span className="eyebrow">Latest news</span>
         <h2>Headlines by sector</h2>
-        <p className="lede">Sector-wise headlines from a news API, cached and de-duplicated, with the last update time shown. Not real-time.</p>
+        <p className="lede">Sector-wise articles collected once a day from public pages, de-duplicated, with the last update time shown. Not real-time.</p>
         <div className="actions"><Link className="btn" href="/news">Open the news dashboard</Link></div>
       </section>
 

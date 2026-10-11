@@ -37,7 +37,8 @@ export function defaultDeps(): NewsDeps {
     supabase: supabaseConfig(),
     ttlMs: num(process.env.NEWS_CACHE_TTL_HOURS, 8) * 3_600_000,
     dailyBudget: num(process.env.NEWS_DAILY_BUDGET, 90),
-    historyDays: num(process.env.NEWS_HISTORY_DAYS, 30),
+    // GNews' free plan only returns ~30 days; without it we simply show everything collected so far.
+    historyDays: num(process.env.NEWS_HISTORY_DAYS, process.env.GNEWS_API_KEY ? 30 : 3650),
     now: () => new Date(),
   };
 }

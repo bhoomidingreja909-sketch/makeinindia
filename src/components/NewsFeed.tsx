@@ -63,11 +63,11 @@ export default function NewsFeed({ sector }: { sector: string }) {
       {state.s === 'ok' && (
         <>
           <p className="status">
-            Latest headlines · last successful update {fmt.format(new Date(state.data.fetchedAt))} IST. Headlines can be delayed by the news provider.
+            Latest articles · last successful update {fmt.format(new Date(state.data.fetchedAt))} IST. Articles are collected once a day, so the newest items may not appear yet.
           </p>
           {state.data.warning && <div className="notice" role="status">{state.data.warning}</div>}
           {state.data.rangeLimited && (
-            <div className="notice info" role="note">The news provider only returns recent history on the current plan, so this range may show fewer stories than actually exist.</div>
+            <div className="notice info" role="note">Only articles collected so far are shown, so this range may include fewer stories than were actually published.</div>
           )}
           {shown.length === 0 ? (
             <div className="notice info" role="status">

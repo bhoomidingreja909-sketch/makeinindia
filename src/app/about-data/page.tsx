@@ -16,14 +16,13 @@ export default function AboutData() {
             <tr><td><EvidenceBadge kind="draft" /></td><td>AI-assisted summary awaiting the author&apos;s check against its source. Do not rely on it as fact.</td></tr>
           </tbody>
         </table>
-        <h2 style={{ marginTop: 32 }}>News headlines</h2>
+        <h2 style={{ marginTop: 32 }}>News articles</h2>
         <ul>
-          <li>Fetched on the server from a news API (GNews) using a secret key that never reaches your browser.</li>
-          <li>Cached for several hours to respect usage limits. The last successful update time is shown on every feed.</li>
-          <li>The provider can delay articles (the free plan by roughly 12 hours), so this is <b>not</b> a real-time feed.</li>
-          <li>Stories are filtered by sector keywords and de-duplicated. Each headline links to the publisher&apos;s original article.</li>
-          <li>Where configured, official Press Information Bureau releases are mixed in and tagged &ldquo;Govt release&rdquo;.</li>
-          <li>Once a day, a polite crawler (which obeys robots.txt) collects the title, a short excerpt, the date and the link of Invest India blog/news pages. They are shown credited to Invest India and always link back to the original; full text is never copied.</li>
+          <li>Once a day, a polite crawler collects the title, a short excerpt, the date and the link of Invest India blog and news pages. It obeys the site&apos;s robots.txt, identifies itself, waits between requests and limits how many pages it fetches.</li>
+          <li>Only the headline and a short excerpt are stored; full text is never copied. Every item is credited to its source and links to the original.</li>
+          <li>Articles are filtered by sector keywords and de-duplicated. Because collection happens once a day, this is <b>not</b> a real-time feed; the last successful update time is shown on every view.</li>
+          <li>Invest India publishes blogs and features rather than breaking news, so some sectors may show few or no articles. We do not fill gaps with made-up items.</li>
+          <li>Where configured, official Press Information Bureau releases can also be mixed in and tagged &ldquo;Govt release&rdquo;.</li>
         </ul>
         <h2 style={{ marginTop: 32 }}>Startup stories</h2>
         <p>Every line is traceable to a linked source with a retrieval date. A story is marked verified only after the author has checked each line.</p>

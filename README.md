@@ -1,6 +1,6 @@
 # Make in India — redesigned portal (student project)
 
-Next.js 15 (App Router, TypeScript) + Supabase. Sector news is fetched **server-side** from GNews and cached; forms are stored in Supabase.
+Next.js 15 (App Router, TypeScript) + Supabase. Sector news comes from a polite **daily crawl** of Invest India blog/news pages stored in Supabase (an optional GNews key can add more); forms are stored in Supabase.
 See `PRD.md` for scope, evidence labels and data policy.
 
 ## Run locally
@@ -14,9 +14,12 @@ npm run check:links             # fails if nav/pages link to investindia.gov.in
 npm run check:news              # ONE real call to GNews to prove your key works
 npm run build && npm start      # production build
 ```
-Without keys the site still runs: the news panel says the feed is not configured and the forms say the service is unavailable. Nothing is faked.
+Without Supabase set up the site still runs: the news panel says the feed is not configured and the forms say the service is unavailable. Nothing is faked.
 
-## 1. News API key (free)
+## 1. (Optional) GNews key — not needed
+The site no longer needs a news API key. Skip this section unless you later want extra headlines from GNews.
+
+### Optional: GNews key (free)
 1. Create a free account at https://gnews.io and copy the API key from the dashboard.
 2. Put it in `.env.local` as `GNEWS_API_KEY=...` (server-only; never use a `NEXT_PUBLIC_` prefix).
 3. Free plan (verify on gnews.io/pricing): ~100 requests/day, ~12-hour article delay, non-commercial use. Defaults here (8 h cache, 90-call daily budget) keep 27 sectors inside that.

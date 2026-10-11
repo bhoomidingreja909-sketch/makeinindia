@@ -140,7 +140,7 @@ export const LEGAL: LegalPage[] = [
     'This site does not currently use analytics. If that changes, this page will be updated first.' ] },
   { slug: 'copyright', title: 'Copyright Policy', body: [
     'Original text, layout and code on this site are the author’s academic work. Facts and figures belong to their cited sources.',
-    'Headlines and links are provided by a news API and belong to their publishers; we show headlines and short descriptions only and always link to the original article.',
+    'Article titles, excerpts and links are collected from public pages and belong to their publishers; we show only the headline and a short excerpt, credit the source, and always link to the original article.',
     'We do not use the National Emblem or any government logo.' ] },
   { slug: 'hyperlinking', title: 'Hyperlinking Policy', body: [
     'External links open in a new tab and are marked with ↗. We are not responsible for the content or availability of linked sites.',

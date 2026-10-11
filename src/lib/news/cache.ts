@@ -1,4 +1,5 @@
 import type { CacheEntry, CacheStore } from './types';
+import { supabaseConfig, supabaseHeaders } from '../supabase';
 
 /** Per-process cache. Fine for local dev and a single server; lost on serverless cold starts. */
 export class MemoryCache implements CacheStore {
@@ -22,7 +23,7 @@ export class SupabaseCache implements CacheStore {
   constructor(private url: string, private serviceKey: string) {}
 
   private headers() {
-    return { apikey: this.serviceKey, Authorization: `Bearer ${this.serviceKey}`, 'Content-Type': 'application/json' };
+    return supabaseHeaders(this.serviceKey);
   }
 
   async get(key: string): Promise<CacheEntry | null> {
@@ -64,8 +65,7 @@ export class SupabaseCache implements CacheStore {
 let shared: CacheStore | undefined;
 export function getCache(): CacheStore {
   if (shared) return shared;
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  shared = url && key ? new SupabaseCache(url, key) : new MemoryCache();
+  const cfg = supabaseConfig();
+  shared = cfg ? new SupabaseCache(cfg.url, cfg.key) : new MemoryCache();
   return shared;
 }

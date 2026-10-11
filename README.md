@@ -24,8 +24,9 @@ Without keys the site still runs: the news panel says the feed is not configured
 
 ## 2. Supabase (free)
 1. Create a project at https://supabase.com.
-2. SQL editor → paste and run `supabase/migrations/001_init.sql` (creates tables with row-level security and **no public policies**).
-3. Settings → API: copy the **Project URL** → `SUPABASE_URL`, and the **service_role** key → `SUPABASE_SERVICE_ROLE_KEY` (server-only secret).
+2. SQL editor → paste and run `supabase/migrations/20261011000000_init.sql` (creates tables with row-level security and **no public policies**).
+3. Project Settings → API Keys: copy the **Project URL** → `SUPABASE_URL`, and the **secret key** (`sb_secret_…`) → `SUPABASE_SECRET_KEY` (server-only; a legacy `service_role` key in `SUPABASE_SERVICE_ROLE_KEY` also works). The publishable/anon key is **not** used: the forms write from the server, and the tables deliberately have no public policies.
+4. Alternative to pasting SQL: `supabase login`, `supabase link --project-ref <ref>`, `supabase db push` applies `supabase/migrations/`.
 
 ## 3. Deploy (Vercel or Netlify)
 - **Vercel:** import the GitHub repo → Framework preset *Next.js* → Settings → Environment Variables: add every name from `.env.example` → Deploy.

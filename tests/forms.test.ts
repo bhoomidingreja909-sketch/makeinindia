@@ -34,3 +34,17 @@ describe('rateLimited', () => {
     expect(rateLimited('1.2.3.4', t + 3_700_000)).toBe(false);
   });
 });
+
+import { supabaseConfig, supabaseHeaders } from '@/lib/supabase';
+describe('supabase config', () => {
+  it('sends new sb_secret_ keys in apikey only, legacy JWTs in both', () => {
+    expect(supabaseHeaders('sb_secret_abc')).not.toHaveProperty('Authorization');
+    expect(supabaseHeaders('sb_secret_abc').apikey).toBe('sb_secret_abc');
+    expect(supabaseHeaders('eyJhbGciOi.x.y').Authorization).toBe('Bearer eyJhbGciOi.x.y');
+  });
+  it('reads either env naming and trims trailing slashes; null when unset', () => {
+    expect(supabaseConfig({ NEXT_PUBLIC_SUPABASE_URL: 'https://x.supabase.co/', SUPABASE_SECRET_KEY: 'k' })).toEqual({ url: 'https://x.supabase.co', key: 'k' });
+    expect(supabaseConfig({ SUPABASE_URL: 'https://x.supabase.co', SUPABASE_SERVICE_ROLE_KEY: 'k2' })?.key).toBe('k2');
+    expect(supabaseConfig({})).toBeNull();
+  });
+});

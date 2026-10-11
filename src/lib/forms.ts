@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { NextResponse } from 'next/server';
+import { supabaseConfig, supabaseHeaders } from './supabase';
 
 const text = (max: number) => z.string().trim().max(max);
 
@@ -40,12 +41,11 @@ export function clientIp(req: Request): string {
 }
 
 export async function insertRow(table: string, row: Record<string, unknown>): Promise<boolean> {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return false;
-  const res = await fetch(`${url}/rest/v1/${table}`, {
+  const cfg = supabaseConfig();
+  if (!cfg) return false;
+  const res = await fetch(`${cfg.url}/rest/v1/${table}`, {
     method: 'POST',
-    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    headers: { ...supabaseHeaders(cfg.key), Prefer: 'return=minimal' },
     body: JSON.stringify(row),
     signal: AbortSignal.timeout(8_000),
   });
@@ -65,7 +65,7 @@ export async function handleForm<T extends { website?: string; consent: true }>(
   }
   const { website: _hp, consent: _c, ...row } = parsed.data;
   void _hp; void _c;
-  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!supabaseConfig()) {
     // Never pretend a message was saved when storage is not configured.
     console.error(`[forms] Supabase is not configured; ${table} submission was not stored.`);
     return NextResponse.json({ ok: false, message: 'Our form service is not available right now. Please try again later.' }, { status: 503 });

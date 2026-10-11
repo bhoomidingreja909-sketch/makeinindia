@@ -9,7 +9,8 @@ create table if not exists contact_queries (
   email text not null,
   phone text,
   organisation text,
-  category text not null check (category in ('investment','policy','startup','media','other')),
+  category text not null check (category in ('investment','policy','startup','media','feedback','other')),
+  sector_slug text,
   message text not null,
   status text not null default 'new',
   created_at timestamptz not null default now()

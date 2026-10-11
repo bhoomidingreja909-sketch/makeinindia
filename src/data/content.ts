@@ -12,6 +12,7 @@ export interface Source { name: string; url: string; date?: string }
 // ---------------------------------------------------------------- Startup stories
 export interface Story {
   slug: string;
+  state: string;
   name: string;
   sector: string; // sector slug
   headline: string;
@@ -24,7 +25,7 @@ export interface Story {
 
 export const STORIES: Story[] = [
   {
-    slug: 'agnikul-cosmos', name: 'Agnikul Cosmos', sector: 'aerospace-defence',
+    slug: 'agnikul-cosmos', state: 'Tamil Nadu', name: 'Agnikul Cosmos', sector: 'aerospace-defence',
     headline: 'A rocket engine printed as a single piece',
     summary: [
       'Chennai-based startup founded in 2017, associated with IIT Madras.',
@@ -39,7 +40,7 @@ export const STORIES: Story[] = [
     verified: false, retrieved: '2026-10-11',
   },
   {
-    slug: 'skyroot-aerospace', name: 'Skyroot Aerospace', sector: 'aerospace-defence',
+    slug: 'skyroot-aerospace', state: 'Telangana', name: 'Skyroot Aerospace', sector: 'aerospace-defence',
     headline: 'India\'s first private rocket to reach space',
     summary: [
       'Hyderabad-based startup founded in 2018 by former ISRO engineers.',
@@ -54,7 +55,7 @@ export const STORIES: Story[] = [
     verified: false, retrieved: '2026-10-11',
   },
   {
-    slug: 'ideaforge', name: 'ideaForge Technology', sector: 'aerospace-defence',
+    slug: 'ideaforge', state: 'Maharashtra', name: 'ideaForge Technology', sector: 'aerospace-defence',
     headline: 'From an IIT Bombay campus idea to India\'s listed drone maker',
     summary: [
       'Mumbai-based drone maker founded by IIT Bombay students; Business Today links its origin to the 26/11 attacks.',
@@ -69,7 +70,7 @@ export const STORIES: Story[] = [
     verified: false, retrieved: '2026-10-11',
   },
   {
-    slug: 'zetwerk', name: 'Zetwerk', sector: 'capital-goods',
+    slug: 'zetwerk', state: 'Karnataka', name: 'Zetwerk', sector: 'capital-goods',
     headline: 'A marketplace that connects buyers with Indian manufacturers',
     summary: [
       'Bengaluru-based manufacturing-services platform founded in 2018.',
@@ -84,7 +85,7 @@ export const STORIES: Story[] = [
     verified: false, retrieved: '2026-10-11',
   },
   {
-    slug: 'ather-energy', name: 'Ather Energy', sector: 'automotive',
+    slug: 'ather-energy', state: 'Tamil Nadu', name: 'Ather Energy', sector: 'automotive',
     headline: 'Electric scooters, built in Hosur, listed on the exchanges',
     summary: [
       'Operates a plant in Hosur, Tamil Nadu (installed capacity of 4,20,000 vehicles and 3,79,800 battery packs as of March 2024).',
@@ -154,20 +155,33 @@ export const FDI: PolicyDoc = {
   ],
 };
 
-// ---------------------------------------------------------------- FAQ (startup-focused)
-export interface Faq { q: string; a: string; evidence: Evidence; source: Source }
-const SI: Source = { name: 'Startup India — FAQs', url: 'https://www.startupindia.gov.in' };
+// ---------------------------------------------------------------- FAQ (grouped)
+export type FaqCategory = 'General' | 'Investors & FDI' | 'Sectors' | 'Schemes' | 'Startups' | 'Technical & Portal';
+export const FAQ_CATEGORIES: FaqCategory[] = ['General', 'Investors & FDI', 'Sectors', 'Schemes', 'Startups', 'Technical & Portal'];
+export interface Faq { q: string; a: string; cat: FaqCategory; evidence: Evidence; source: Source }
+const SI: Source = { name: 'Startup India', url: 'https://www.startupindia.gov.in' };
+const VK: Source = { name: 'Vikaspedia — Make in India', url: 'https://vikaspedia.in/social-welfare/skill-development/make-in-india' };
+const RS: Source = { name: 'Rajya Sabha answer, Dec 2022', url: 'https://rsdebate.nic.in/bitstream/123456789/734518/1/PQ_258_16122022_U1181_p324_p325.pdf' };
+const PIB_PLI: Source = { name: 'PIB — PLI schemes', url: 'https://www.pib.gov.in/PressReleasePage.aspx?PRID=1945155' };
 export const FAQS: Faq[] = [
-  { q: 'What is DPIIT recognition for startups?', a: 'DPIIT (Department for Promotion of Industry and Internal Trade) recognises eligible entities as startups so they can access Startup India benefits. Apply through the Startup India portal.', evidence: 'draft', source: SI },
-  { q: 'Who is eligible to be recognised as a startup?', a: 'Broadly: an entity incorporated as a private limited company, registered partnership firm or LLP, working towards innovation or improvement of products/services/processes, within the age and turnover limits in the current notification. Check the latest limits on the Startup India portal.', evidence: 'draft', source: SI },
-  { q: 'How do I register a company in India?', a: 'Companies are incorporated with the Ministry of Corporate Affairs (MCA). The integrated SPICe+ form covers name reservation, incorporation, PAN, TAN and more. See the Investor Desk for the step list.', evidence: 'draft', source: { name: 'MCA', url: 'https://www.mca.gov.in' } },
-  { q: 'Can a foreign company or individual invest in an Indian startup?', a: 'Yes, subject to the FDI policy: most sectors allow 100% under the automatic route; some need government approval and some are prohibited. See Policies → FDI.', evidence: 'verified', source: { name: 'Make in India — FDI', url: 'https://www.makeinindia.com/policy/foreign-direct-investment' } },
-  { q: 'How can I protect my startup\'s idea or brand?', a: 'Register the relevant IP: patents, designs, trademarks or GIs. CIPAM under DPIIT is the single reference point for IPR policy implementation. See Policies → IPR.', evidence: 'verified', source: { name: 'Make in India — IPR', url: 'https://www.makeinindia.com/policy/intellectual-property-facts' } },
-  { q: 'Are there tax benefits for startups?', a: 'Recognised startups may be eligible for certain tax benefits under the Income-tax Act. Eligibility, duration and conditions change — read the current provision and consult a chartered accountant.', evidence: 'draft', source: SI },
-  { q: 'What funding support exists for startups?', a: 'Government-linked options include the Fund of Funds for Startups (managed through SIDBI) and credit-guarantee schemes. Confirm current scheme names and eligibility on the Startup India portal.', evidence: 'draft', source: SI },
-  { q: 'Which sectors does Make in India cover?', a: 'Fifteen manufacturing sectors and twelve service sectors. Browse them on the Sectors page, each with its latest headlines.', evidence: 'verified', source: { name: 'Make in India — Sectors', url: 'https://www.makeinindia.com/sectors' } },
-  { q: 'How current is the news on this site?', a: 'Headlines come from a news API and may be delayed by the provider (the free plan can delay articles by about 12 hours). The page always shows when the feed last updated successfully.', evidence: 'verified', source: { name: 'About our data', url: '/about-data' } },
-  { q: 'How do I contact the investor desk?', a: 'Use the Contact page — your query is stored securely and handled on this site, without sending you to another website.', evidence: 'verified', source: { name: 'Contact', url: '/contact' } },
+  { cat: 'General', q: 'What is Make in India?', a: 'A national programme launched on 25 September 2014 by PM Narendra Modi to promote India as an investment destination and a global hub for manufacturing, design and innovation. It rests on four pillars: New Processes, New Infrastructure, New Sectors and New Mindset.', evidence: 'secondary', source: VK },
+  { cat: 'General', q: 'What were the original goals?', a: 'The original targets were manufacturing at 25% of GDP and 100 million additional manufacturing jobs. These are shown as the programme\'s original goals.', evidence: 'secondary', source: VK },
+  { cat: 'General', q: 'Who implements Make in India?', a: 'DPIIT (Ministry of Commerce & Industry) and Invest India. The Investor Facilitation Cell within Invest India helps investors through pre-investment, execution and after-care.', evidence: 'draft', source: { name: 'About our data', url: '/about-data' } },
+  { cat: 'General', q: 'Who can participate?', a: 'Domestic and foreign companies, startups and MSMEs can take part, subject to sector rules. Investors should check the FDI route for their sector.', evidence: 'draft', source: { name: 'Make in India — FDI', url: 'https://www.makeinindia.com/policy/foreign-direct-investment' } },
+  { cat: 'Investors & FDI', q: 'Can a foreign company or individual invest in India?', a: 'Yes, subject to the FDI policy: sectors without a specific cap are open up to 100% under the automatic route; some need government approval and some are prohibited.', evidence: 'verified', source: { name: 'Make in India — FDI', url: 'https://www.makeinindia.com/policy/foreign-direct-investment' } },
+  { cat: 'Investors & FDI', q: 'What is the difference between the automatic and government routes?', a: 'Under the automatic route no prior government approval is needed. Under the government route you need prior approval from the relevant ministry. Investors from land-border countries can invest only through the government route.', evidence: 'verified', source: { name: 'Make in India — FDI', url: 'https://www.makeinindia.com/policy/foreign-direct-investment' } },
+  { cat: 'Investors & FDI', q: 'How do I protect my idea or brand?', a: 'Register the relevant IP: patents, designs, trademarks or GIs. CIPAM under DPIIT is the single reference point for implementing the IPR Policy adopted on 12 May 2016.', evidence: 'verified', source: { name: 'Make in India — IPR', url: 'https://www.makeinindia.com/policy/intellectual-property-facts' } },
+  { cat: 'Investors & FDI', q: 'How do I register a company in India?', a: 'Companies are incorporated with the Ministry of Corporate Affairs. The integrated SPICe+ form covers name reservation, incorporation, PAN and TAN. See the Investor Desk for the step list.', evidence: 'draft', source: { name: 'MCA', url: 'https://www.mca.gov.in' } },
+  { cat: 'Sectors', q: 'Which sectors does Make in India 2.0 cover?', a: '27 sectors: 15 manufacturing sectors coordinated by DPIIT and 12 service sectors coordinated by the Department of Commerce. Browse them on the Sectors page.', evidence: 'verified', source: RS },
+  { cat: 'Sectors', q: 'Where do I find news for a sector?', a: 'Open a sector tile (or the News page) and use the Weekly, Monthly, Quarterly or Yearly tabs.', evidence: 'verified', source: { name: 'Sectors', url: '/sectors' } },
+  { cat: 'Schemes', q: 'What is the PLI scheme?', a: 'Production Linked Incentive schemes cover 14 key sectors with a total outlay of ₹1.97 lakh crore, to strengthen manufacturing capability and exports.', evidence: 'verified', source: PIB_PLI },
+  { cat: 'Schemes', q: 'How do I find incentives for my sector?', a: 'Use the Incentive finder on the Schemes page: choose a sector and, optionally, a state. States run their own schemes, so also check your state\'s industries department.', evidence: 'draft', source: { name: 'Schemes', url: '/schemes' } },
+  { cat: 'Startups', q: 'What is DPIIT recognition for startups?', a: 'DPIIT recognises eligible entities as startups so they can access Startup India benefits. Apply through the Startup India portal and check current eligibility limits there.', evidence: 'draft', source: SI },
+  { cat: 'Startups', q: 'Are there tax benefits or funding for startups?', a: 'Recognised startups may be eligible for certain tax benefits and funding support (such as the Fund of Funds for Startups). Conditions change — read the current notification and consult a chartered accountant.', evidence: 'draft', source: SI },
+  { cat: 'Technical & Portal', q: 'How current is the news on this site?', a: 'Headlines come from a news API and may be delayed by the provider (the free plan by about 12 hours). Every feed shows when it last updated successfully.', evidence: 'verified', source: { name: 'About our data', url: '/about-data' } },
+  { cat: 'Technical & Portal', q: 'Is this the official Make in India website?', a: 'No. It is an academic redesign project and is not affiliated with DPIIT, Invest India or the Government of India. Queries go to the project author.', evidence: 'verified', source: { name: 'Disclaimer', url: '/legal/disclaimer' } },
+  { cat: 'Technical & Portal', q: 'How do I change language, text size or contrast?', a: 'Use the toolbar at the top: EN/हिं for language (navigation and key labels), A− A A+ for text size, and the theme selector for light, dark or high contrast.', evidence: 'verified', source: { name: 'Help', url: '/legal/help' } },
+  { cat: 'Technical & Portal', q: 'How do I contact the investor desk?', a: 'Use the Contact page. Your query is stored securely on this site, without sending you to another website.', evidence: 'verified', source: { name: 'Contact', url: '/contact' } },
 ];
 
 // ---------------------------------------------------------------- Articles (listicles moved on-site)

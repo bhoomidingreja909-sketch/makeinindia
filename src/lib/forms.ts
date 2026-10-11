@@ -8,7 +8,8 @@ export const contactSchema = z.object({
   email: z.string().trim().toLowerCase().email().max(200),
   phone: text(30).optional().or(z.literal('')),
   organisation: text(150).optional().or(z.literal('')),
-  category: z.enum(['investment', 'policy', 'startup', 'media', 'other']),
+  category: z.enum(['investment', 'policy', 'startup', 'media', 'feedback', 'other']),
+  sector_slug: text(60).optional().or(z.literal('')),
   message: text(2000).min(10),
   consent: z.literal(true),
   website: z.string().max(0).optional(), // honeypot: real users leave it empty

@@ -5,7 +5,7 @@ import { SECTORS } from '@/data/sectors';
 type Mode = 'contact' | 'apply';
 type Result = { kind: 'idle' } | { kind: 'sending' } | { kind: 'ok'; message: string } | { kind: 'err'; message: string; fields?: Record<string, string[]> };
 
-export default function QueryForm({ mode }: { mode: Mode }) {
+export default function QueryForm({ mode, defaultCategory = 'investment' }: { mode: Mode; defaultCategory?: string }) {
   const [res, setRes] = useState<Result>({ kind: 'idle' });
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -30,6 +30,7 @@ export default function QueryForm({ mode }: { mode: Mode }) {
 
   return (
     <form className="stack" onSubmit={onSubmit} noValidate>
+      <p className="notice info" role="note">Academic project: your message goes to the project author, not to DPIIT, Invest India or any ministry. Please do not share confidential or sensitive information.</p>
       {mode === 'contact' ? (
         <>
           <label>Your name<input name="name" required autoComplete="name" />{fe('name') && <span className="err">{fe('name')}</span>}</label>
@@ -37,10 +38,13 @@ export default function QueryForm({ mode }: { mode: Mode }) {
           <label>Phone (optional)<input name="phone" type="tel" autoComplete="tel" /></label>
           <label>Organisation (optional)<input name="organisation" autoComplete="organization" /></label>
           <label>Topic
-            <select name="category" defaultValue="investment">
+            <select name="category" defaultValue={defaultCategory}>
               <option value="investment">Investing in India</option><option value="policy">Policy (IPR / FDI)</option>
-              <option value="startup">Startups</option><option value="media">Media</option><option value="other">Other</option>
+              <option value="startup">Startups</option><option value="media">Media</option><option value="feedback">Feedback / accessibility</option><option value="other">Other</option>
             </select>
+          </label>
+          <label>Sector of interest (optional)
+            <select name="sector_slug" defaultValue=""><option value="">Not sure / any</option>{SECTORS.map((s) => <option key={s.slug} value={s.slug}>{s.name}</option>)}</select>
           </label>
           <label>Message<textarea name="message" required minLength={10} />{fe('message') && <span className="err">{fe('message')}</span>}</label>
         </>

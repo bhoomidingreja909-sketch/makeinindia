@@ -1,6 +1,6 @@
 # PRD — Make in India: Redesigned Portal (v0.1 DRAFT for approval)
 
-**Author:** Bhoomi (TY BBA) · **Subject:** Digital Marketing & AI · **Status:** APPROVED by author — v0.2 build in progress (palette updated)
+**Author:** Bhoomi (TY BBA) · **Subject:** Digital Marketing & AI · **Status:** APPROVED · v1.0 build complete (content-brief analysis integrated)
 **Stack (approved):** Next.js (App Router, TypeScript) + Supabase (Postgres) · server-side news route
 
 ---
@@ -46,6 +46,31 @@ Backlink leakage · stale news · no startup page · cluttered Investor Desk · 
 
 ### 2.3 Audit tasks Bhoomi must complete in a browser (needed for marks — "analysed thoroughly")
 Screenshot and log: every nav item and where it links (internal vs investindia.gov.in); homepage sections; date of newest news/blog item; contact form behaviour; mobile view; PageSpeed Insights score (free, pagespeed.web.dev) for baseline vs. our site. These become the "before" evidence in the report. I will provide a fill-in table (`docs/audit-template.md`) once approved.
+
+### 2.4 Analysis of the current site — from the author's Content Brief (PDF, 6 pp.)
+The author supplied a content brief compiled from official sources (PIB, Rajya Sabha/Lok Sabha answers, PMINDIA, DPIIT) and snippets of makeinindia.com. It describes what the *current* site contains. I cross-checked its headline claims by search; results below.
+
+**What the current site contains (per brief):** header with language switch, text-size, high-contrast and search; nav of Home / About / Sectors / Schemes & Incentives / Invest in India / Resources / Success Stories / News & Media / Contact; home with hero, key stats, four pillars, sector explorer, schemes, success stories, news; About (rationale, pillars, timeline, Make in India 2.0); 27 sector pages with an 11-part template; Schemes (PLI, other initiatives, state incentives, incentive finder); Invest in India (FDI, EoDB, IPR, states, Investor Facilitation Cell); Resources; Success Stories; News; Contact & query form; FAQs; and 12+ GIGW compliance pages.
+
+**Claims checked:**
+| Claim in brief | Result |
+|---|---|
+| 27 sectors = 15 manufacturing (DPIIT) + 12 services (Dept. of Commerce) | **Verified** — Rajya Sabha answer 16 Dec 2022 and Lok Sabha answers |
+| PLI: 14 sectors, ₹1.97 lakh crore | **Verified** — PIB release (PRID 1945155). Sector-wise outlays **not** verified → left blank |
+| Launch 25 Sep 2014; four pillars | **Secondary** — Vikaspedia, Drishti IAS |
+| Brief's own manufacturing list (includes Mining, Oil & Gas) | **Conflicts** with makeinindia.com/sectors snippet (the 15 used in this build). Brief itself says "[verify]". Build keeps the makeinindia.com list |
+| FDI inflow figure | **Secondary** — FY2024-25 total US$ 81.04 bn (incl. reinvested earnings & other capital; equity ≈ US$ 50 bn), press-reported |
+
+**Gaps in the current site this redesign closes** (author's research + brief): off-site redirects; stale news; no sector-wise live news; no startup showcase; process not explained; cluttered Investor Desk; Opportunities page. **Added from the brief's own list:** filterable sector grid; 11-part sector template; PLI table + incentive finder; states/UT explorer; resources; animated sourced stats; scroll timeline; FAQ assistant; dark mode; Hindi/English toggle; compliance pages; breadcrumbs; text-size & high-contrast controls.
+
+**Deliberate deviations from the brief (and why):**
+1. **No Invest India links** in nav/footer/forms — the author's explicit goal (brief lists them in the footer).
+2. **No "Content owned by DPIIT" line, no National Emblem, no visitor counter** — would imply official status / invent data. A persistent banner states "Academic redesign project. Not an official Government of India website."
+3. **No invented content** for sector statistics, "why invest", growth drivers, brochures, state profiles, PLI outlays or contact details: these sections render an explicit "not added yet — needs a verified source" state.
+4. **FAQ assistant is retrieval-only** (returns existing sourced answers; declines unrelated questions), not a generative chatbot — it cannot hallucinate. A generative upgrade would need an LLM API key and guardrails.
+5. **Incentive finder omits "investment size"** until scheme eligibility thresholds are verified.
+6. **Hindi covers navigation and key labels only**; content stays English (a banner says so) pending a reviewed translation.
+7. **Tile map instead of a boundary map** for 28 states + 8 UTs (no verified geometry); marks states with cited facts.
 
 ---
 

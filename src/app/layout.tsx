@@ -2,24 +2,29 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import Providers from '@/components/Providers';
 
 const site = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site),
   title: { default: 'Make in India — Sectors, Policy & Startup Stories', template: '%s · Make in India (redesign)' },
-  description: 'A redesigned Make in India portal: sector-wise headlines, IPR and FDI policy explained, and startup success stories with cited sources.',
-  openGraph: { type: 'website', title: 'Make in India — redesigned', description: 'Sector news, policies and startup stories in one place.' },
+  description: 'An academic redesign of Make in India: sector-wise headlines, schemes, IPR and FDI policy explained, and startup stories with cited sources.',
+  openGraph: { type: 'website', title: 'Make in India — redesigned', description: 'Sector news, schemes, policies and startup stories in one place.' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" suppressHydrationWarning>
       <body>
-        <a className="skip" href="#main">Skip to content</a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        <Providers>
+          <a className="skip" href="#main">Skip to main content</a>
+          <Header />
+          <Breadcrumbs />
+          <main id="main" tabIndex={-1}>{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

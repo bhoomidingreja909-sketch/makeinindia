@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import FaqList from '@/components/FaqList';
+import FaqAssistant from '@/components/FaqAssistant';
 import { FAQS } from '@/data/content';
 
-export const metadata: Metadata = { title: 'FAQ', description: 'Answers to common startup and investor questions.' };
+export const metadata: Metadata = { title: 'FAQ', description: 'Answers to common investor and startup questions, with sources.' };
 
 export default function Faq() {
   // Only answers backed by an official source are exposed as structured data.
@@ -13,8 +14,11 @@ export default function Faq() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld).replace(/</g, '\\u003c') }} />
-      <div className="page-head"><div className="wrap"><span className="eyebrow">FAQ</span><h1>Questions founders ask</h1><p className="lede">Each answer shows whether it is backed by an official page or still a draft to verify.</p></div></div>
-      <div className="wrap block" style={{ maxWidth: 820 }}><FaqList /></div>
+      <div className="page-head"><div className="wrap"><span className="eyebrow">FAQ</span><h1>Questions people ask</h1><p className="lede">Grouped by topic. Each answer shows whether it is backed by an official page or is still a draft to verify.</p></div></div>
+      <div className="wrap block" style={{ maxWidth: 860 }}>
+        <FaqAssistant />
+        <FaqList />
+      </div>
     </>
   );
 }

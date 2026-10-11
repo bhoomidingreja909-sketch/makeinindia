@@ -30,6 +30,18 @@ export default function InvestorDesk() {
         </div>
       </section>
 
+      <section className="wrap block">
+        <span className="eyebrow">Investor Facilitation Cell</span>
+        <h2>Support from first idea to after-care</h2>
+        <p>The Investor Facilitation Cell, within Invest India, helps investors through three phases:</p>
+        <div className="grid cols-3">
+          <div className="card"><h3>Pre-investment</h3><p>Understand sectors, policies and incentives.</p></div>
+          <div className="card"><h3>Execution</h3><p>Approvals, registrations and setting up.</p></div>
+          <div className="card"><h3>After-care</h3><p>Support once you are operating.</p></div>
+        </div>
+        <p className="meta" style={{ marginTop: 12 }}>Explore <Link href="/states">states &amp; UTs</Link> and the <Link href="/schemes">incentive finder</Link> to plan where to invest.</p>
+      </section>
+
       <section id="register" className="wrap block">
         <span className="eyebrow">Company registration</span>
         <h2>Six steps to a registered company</h2>

@@ -21,6 +21,11 @@ function Group({ title, sectors, active, onPick }: { title: string; sectors: Sec
 
 export default function SectorExplorer() {
   const [active, setActive] = useState<Sector | null>(null);
+  const [group, setGroup] = useState<'all' | 'manufacturing' | 'services'>('all');
+  const [q, setQ] = useState('');
+  const hit = (s: Sector) => s.name.toLowerCase().includes(q.trim().toLowerCase());
+  const man = MANUFACTURING.filter(hit);
+  const srv = SERVICES.filter(hit);
 
   useEffect(() => {
     if (!active) return;
@@ -32,8 +37,15 @@ export default function SectorExplorer() {
 
   return (
     <>
-      <Group title="Manufacturing Sectors" sectors={MANUFACTURING} active={active?.slug} onPick={setActive} />
-      <Group title="Service Sectors" sectors={SERVICES} active={active?.slug} onPick={setActive} />
+      <div className="filters" role="group" aria-label="Filter sectors">
+        {(['all', 'manufacturing', 'services'] as const).map((g) => (
+          <button key={g} className="chip" aria-pressed={group === g} onClick={() => setGroup(g)}>{g === 'all' ? 'All 27' : g === 'manufacturing' ? 'Manufacturing (15)' : 'Services (12)'}</button>
+        ))}
+        <input className="search" style={{ width: 260, margin: 0 }} type="search" placeholder="Filter by name…" aria-label="Filter sectors by name" value={q} onChange={(e) => setQ(e.target.value)} />
+      </div>
+      {group !== 'services' && man.length > 0 && <Group title="Manufacturing Sectors" sectors={man} active={active?.slug} onPick={setActive} />}
+      {group !== 'manufacturing' && srv.length > 0 && <Group title="Service Sectors" sectors={srv} active={active?.slug} onPick={setActive} />}
+      {man.length + srv.length === 0 && <div className="notice info">No sector matches “{q}”.</div>}
       {active && (
         <>
           <div className="scrim" onClick={() => setActive(null)} />
@@ -42,7 +54,7 @@ export default function SectorExplorer() {
               <div><span style={{ fontSize: '1.6rem' }} aria-hidden>{active.icon}</span><h2>{active.name}</h2></div>
               <button className="close" onClick={() => setActive(null)} autoFocus>Close ✕</button>
             </div>
-            <div className="panel-body"><NewsFeed sector={active.slug} /></div>
+            <div className="panel-body"><NewsFeed sector={active.slug} /><p style={{ marginTop: 20 }}><a href={`/sectors/${active.slug}`}>Open the full {active.name} page →</a></p></div>
           </aside>
         </>
       )}

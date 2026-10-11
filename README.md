@@ -33,5 +33,10 @@ Without keys the site still runs: the news panel says the feed is not configured
 - Set `NEXT_PUBLIC_SITE_URL` to your live URL (used for sitemap/OG tags).
 - Serverless note: the in-memory cache resets on cold starts; with Supabase configured, the cache and daily budget persist in the `news_cache` table.
 
+## What's in the site
+Home (sourced stats, pillars, sector explorer, carousel) · About (timeline) · Sectors (27, filterable, news slide-over) · Sector pages (11-part template + live headlines) · Schemes & Incentives (PLI table, incentive finder) · Investor Desk · States & UTs · Policies (IPR / FDI with Expand All) · Startup Stories (filters) · News dashboard · Resources (+ brand kit) · Articles · FAQ (+ retrieval assistant) · Contact / Feedback (→ Supabase) · Site search · HTML sitemap · 11 policy/help pages. Accessibility: skip link, breadcrumbs, text size, dark and high-contrast themes, EN/हिं toggle, reduced-motion support.
+
 ## Content you must verify before submission
 Anything labelled **Draft — verify** (startup stories, FAQ, policy sections, articles) was drafted from search snippets and general knowledge. Open the cited source, check each line, then set `verified: true` for stories in `src/data/content.ts` and update the section's `evidence`.
+
+Sections that say **"Not added yet — needs a verified source"** (sector statistics, why invest, growth drivers, brochures, state profiles, PLI sector outlays, official contact details) are intentionally empty. Fill them from official documents; do not use unsourced numbers.

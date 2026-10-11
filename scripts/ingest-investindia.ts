@@ -13,13 +13,15 @@ if (!dry && !cfg) { console.error('FAIL: set SUPABASE_URL and SUPABASE_SECRET_KE
 
 const contact = process.env.INGEST_CONTACT || process.env.NEXT_PUBLIC_SITE_URL || 'college project';
 const ua = `MakeInIndiaStudentProject/1.0 (academic; contact: ${contact})`;
-try {
+async function main() {
   const skip = cfg && !dry ? await knownUrls(cfg) : new Set<string>();
   const rows = await crawl({ ua, skip, log: (m) => console.log(m), maxPages: Number(process.env.INGEST_MAX_PAGES) || 30 });
   console.log(`Extracted ${rows.length} article(s).`);
   for (const r of rows.slice(0, 5)) console.log(` - ${r.published_at.slice(0, 10)}  ${r.title}`);
   if (!dry && cfg) { await saveIngested(cfg, rows); console.log('Saved to Supabase.'); }
-} catch (e) {
+}
+
+main().catch((e) => {
   console.error('FAIL:', (e as Error).message);
   process.exit(1);
-}
+});

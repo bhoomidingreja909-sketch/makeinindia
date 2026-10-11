@@ -200,14 +200,14 @@ src/app/api/contact/route.ts       # validation → Supabase
 src/lib/news/{providers/gnews.ts, providers/pib.ts, dedupe.ts, cache.ts, sectors.ts}
 src/lib/supabase/{server.ts}       # service-role, server only
 src/components/{SectorGrid, NewsPanel, PolicyCard, Accordion, StoryCard, SourceBadge}.tsx
-supabase/migrations/001_init.sql   # tables + RLS
+supabase/migrations/20261011000000_init.sql   # tables + RLS
 scripts/{check-news.ts, check-links.ts}
 tests/ (vitest): dedupe, sector query builder, route error cases (401/429/empty), form validation
 docs/{data-register.md, audit-template.md}
 ```
 Milestones: M1 scaffold+design system → M2 sectors+news API (mocked) → M3 policies+investor desk → M4 stories+FAQ+forms+Supabase → M5 SEO/analytics/tests → M6 report assets.
 
-**Run commands (after build):** `npm install` · copy `.env.example` → `.env.local` and fill `GNEWS_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` · `npm run dev` (http://localhost:3000) · `npm test` · `npm run check:news`. Production: set the same variables in Vercel → Project → Settings → Environment Variables.
+**Run commands (after build):** `npm install` · copy `.env.example` → `.env.local` and fill `GNEWS_API_KEY`, `SUPABASE_URL`, `SUPABASE_SECRET_KEY` · `npm run dev` (http://localhost:3000) · `npm test` · `npm run check:news`. Production: set the same variables in Vercel → Project → Settings → Environment Variables.
 
 ## 14. Risks
 | Risk | Mitigation |

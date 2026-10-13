@@ -5,6 +5,14 @@
 
 ---
 
+> **v1.0 — final. Decisions made since v0.1 (supersede anything below that says otherwise):**
+> 1. **Stack:** Next.js + Supabase, deployed on Vercel or Netlify (approved).
+> 2. **Palette:** #BA1200 · #031927 · #9DD1F1 · #508AA8 · #C8E0F4 (author-specified, §8).
+> 3. **News source:** no news API key. The primary source is a **polite once-a-day crawl of Invest India blog/news pages** (robots.txt allows it), stored in Supabase (§7.4). GNews and the PIB feed are **optional** extras (leave the keys blank to disable).
+> 4. **Content brief** supplied by the author was cross-checked and integrated (§2.4).
+> 5. **Not done / deliberately empty:** sector statistics, "why invest", growth drivers, brochures, PLI sector-wise outlays, official contact details and state profiles are shown as "not added yet — needs a verified source". All startup stories are marked "Draft — verify" until the author checks them.
+> 6. **Secrets:** no key or password is stored in the repository. Keys that were pasted in chat must be rotated and kept only in `.env.local`, the hosting dashboard and GitHub secrets.
+
 ## 0. How to read this document (evidence labels)
 
 Every claim below carries one label. Nothing unlabelled should be treated as fact.
@@ -129,9 +137,9 @@ Browser calls would expose the key and hit CORS/rate limits. Solution: Next.js R
 | **GNews** | Free tier reported as 100 req/day, ~10 articles/request, **12-hour delay**, 30-day history, **non-commercial / development use only**; paid Essential ≈ €49.99/mo for 1,000 req/day, real-time **[S]** | Yes | Fits the 27-sector plan; verify limits at gnews.io/pricing **[TBV]**. |
 | NewsAPI.org | Free "Developer" plan is dev-only, delayed | Yes | Fallback option; same caveats. **[TBV]** |
 
-**Recommendation [AI]:** hybrid — **PIB RSS as the verified/official stream** + **GNews for business-press coverage**, each article tagged with its source type ("Government release" vs "News media"). For the college demo, the free GNews tier is acceptable *only if the deployment is a non-commercial academic demo* — confirm in GNews' terms **[TBV]**; if "localhost only" applies, demo from `localhost` or upgrade.
+**Decision (final):** the author chose **not** to use a news API. See §7.4 — the daily Invest India crawl is the primary source; the options above remain documented as optional extras.
 
-**Account you need:** a free GNews account at gnews.io → copy the API key from the dashboard. (You do **not** need to pay for development.) Optional free: data.gov.in registration.
+**Accounts you need:** a free Supabase project (for forms and for the crawled articles). No news-API account is needed.
 
 ### 7.3 Query design & quota maths [AI]
 - Each sector has a config entry: `slug, name, group, keywords[], excludeKeywords[], icon`. Query = `(kw1 OR "kw2" …) AND India`, language `en`, country `in`. Exclusions remove homonyms (e.g. "Railways" cricket/job-ad spam).
@@ -142,7 +150,7 @@ Browser calls would expose the key and hit CORS/rate limits. Solution: Next.js R
 - **Errors:** 401/403 (bad key) → admin-visible log + user-friendly "News temporarily unavailable"; 429 → serve stale cache with "showing cached results"; network failure → same; empty → empty state.
 - **Security:** key read as `process.env.GNEWS_API_KEY` server-side only; `.env*` in `.gitignore`; `.env.example` has placeholders; no `NEXT_PUBLIC_` prefix on secrets; `run_secret_scanning` check before every push.
 
-> ⚠️ **The key pasted in chat is compromised — rotate it in the GNews dashboard before use.**
+> ⚠️ **Any key or password pasted in chat is compromised — rotate it (Supabase: Project Settings → API Keys / Database) and keep new values only in `.env.local`, hosting env vars and GitHub secrets.**
 
 ---
 
@@ -210,7 +218,7 @@ docs/{data-register.md, audit-template.md}
 ```
 Milestones: M1 scaffold+design system → M2 sectors+news API (mocked) → M3 policies+investor desk → M4 stories+FAQ+forms+Supabase → M5 SEO/analytics/tests → M6 report assets.
 
-**Run commands (after build):** `npm install` · copy `.env.example` → `.env.local` and fill `GNEWS_API_KEY`, `SUPABASE_URL`, `SUPABASE_SECRET_KEY` · `npm run dev` (http://localhost:3000) · `npm test` · `npm run check:news`. Production: set the same variables in Vercel → Project → Settings → Environment Variables.
+**Run commands:** `npm install` · copy `.env.example` → `.env.local` and fill `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `NEXT_PUBLIC_SITE_URL`, `INGEST_CONTACT` · run both SQL files in `supabase/migrations/` · `npm run ingest -- --dry` then `npm run ingest` · `npm run dev` (http://localhost:3000) · `npm test` · `npm run lint` · `npm run check:links`. Production: set the same variables in Vercel/Netlify, and the three crawler secrets in GitHub → Settings → Secrets → Actions.
 
 ## 14. Risks
 | Risk | Mitigation |
@@ -221,13 +229,15 @@ Milestones: M1 scaffold+design system → M2 sectors+news API (mocked) → M3 po
 | Leaked key | Rotate; server-only env; secret scan |
 | Policy content outdated (FDI 2020) | Compare to current Consolidated FDI Policy; show "last reviewed" date |
 
-## 15. Decisions needed from Bhoomi to approve
-1. Confirm the 12 service-sector names/order (§2.1).
-2. Create a free **GNews** account + (optional) **data.gov.in** account; rotate the leaked key.
-3. Is the deployment a non-commercial academic demo? (affects free-tier eligibility)
-4. Provide 5–10 startup names you want featured (or let me propose candidates, which you must verify before they go live).
-5. ~~Colour direction~~ — resolved: author palette applied (§8).
-6. Approve this PRD → I start M1.
+## 15. Decisions (all resolved)
+1. Service-sector names confirmed by the author (12).
+2. News source: daily Invest India crawl; no news-API key (§7.4).
+3. Deployment: non-commercial college demo on Vercel or Netlify.
+4. Startup candidates: five proposed (Agnikul Cosmos, Skyroot Aerospace, ideaForge, Zetwerk, Ather Energy) — **author must verify each line against its sources** before marking `verified: true`.
+5. Colours and typography: author palette applied (§8).
+6. PRD approved; build complete.
+
+**Open items for the author before submission:** read Invest India's Terms of Use; run the crawler's `--dry` run and share the output; verify all "Draft — verify" content; fill the intentionally empty sections from official documents; rotate exposed keys.
 
 ## Sources consulted (search snippets only; pages not fully readable here)
 - makeinindia.com/sectors, /policy/foreign-direct-investment, /policy/intellectual-property-facts, /about

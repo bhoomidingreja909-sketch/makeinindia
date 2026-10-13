@@ -1,5 +1,8 @@
 import type { Evidence, Source } from './content';
 
+/** Optional: set NEXT_PUBLIC_CONTACT_EMAIL at build time to let the forms open a pre-filled email draft. Empty = demo mode. */
+export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? '';
+
 export const SITE = {
   name: 'Make in India (academic redesign)',
   banner: 'Academic redesign project. Not an official Government of India website.',
@@ -133,14 +136,14 @@ export const LEGAL: LegalPage[] = [
     'Content is provided for study and demonstration. You use it at your own risk and should confirm anything important with the cited official source.',
     'Do not submit confidential, financial or sensitive personal information through the forms on this site.' ] },
   { slug: 'privacy', title: 'Privacy Policy', body: [
-    'What we collect: only what you type into the Contact, Feedback or Startup forms (name, email, optional phone/organisation, message) and your consent.',
-    'How it is stored: in a private database accessible only to the project team via server-side code. It is not shown publicly and not sold or shared.',
+    'What we collect: nothing. This website has no database, no accounts and no analytics. The forms only check your entries in your browser.',
+    'What happens when you submit a form: nothing is sent or stored by this website. If the author has enabled it, you can open a pre-filled email draft and send it yourself from your own mail app.',
     'Browser storage: your language, theme and text-size choices are saved in your browser (localStorage). No tracking cookies are set by this site.',
-    'Retention: submissions are kept only for the duration of the course assessment and then deleted. To request earlier deletion, use the Contact page.',
+    'Retention: not applicable, because nothing is collected.',
     'This site does not currently use analytics. If that changes, this page will be updated first.' ] },
   { slug: 'copyright', title: 'Copyright Policy', body: [
     'Original text, layout and code on this site are the author’s academic work. Facts and figures belong to their cited sources.',
-    'Article titles, excerpts and links are collected from public pages and belong to their publishers; we show only the headline and a short excerpt, credit the source, and always link to the original article.',
+    'Article titles and links belong to their publishers; we show the title, a short summary written by the author, credit the source, and always link to the original article.',
     'We do not use the National Emblem or any government logo.' ] },
   { slug: 'hyperlinking', title: 'Hyperlinking Policy', body: [
     'External links open in a new tab and are marked with ↗. We are not responsible for the content or availability of linked sites.',
@@ -164,7 +167,7 @@ export const LEGAL: LegalPage[] = [
   { slug: 'disclaimer', title: 'Disclaimer', body: [
     'This is an academic redesign project. It is not an official Government of India website, and nothing here is legal, financial or investment advice.',
     'Facts are labelled by evidence level. Items marked “Draft — verify” have not been verified and must not be relied upon.',
-    'The Contact form is a demonstration. Queries go to the project author, not to DPIIT, Invest India or any ministry.' ] },
+    'The Contact form is a demonstration. It does not reach DPIIT, Invest India or any ministry.' ] },
   { slug: 'help', title: 'Help', body: [
     'Browse sectors from the Sectors page and open a tile to see its latest headlines. Use the Weekly/Monthly/Quarterly/Yearly tabs to change the period.',
     'Use the toolbar at the top to switch language, theme (light, dark, high contrast) and text size, or to search the site.',
@@ -173,8 +176,8 @@ export const LEGAL: LegalPage[] = [
     'Stuck? Ask the FAQ assistant, or use the Contact page.' ] },
   { slug: 'website-information', title: 'Website Information', body: [
     'Owner: Bhoomi, TY BBA student (academic project for Digital Marketing & AI).',
-    'Built with Next.js and Supabase and hosted on a commercial platform (Vercel or Netlify) — not on NIC infrastructure.',
-    'Content sources: official government pages (PIB, DPIIT, Parliament answers, Make in India), and press reports where labelled.',
+    'Built with Next.js as a static website (plain HTML files) and hosted on a commercial static host such as Netlify or Vercel — not on NIC infrastructure.',
+    'Content sources: official government pages (PIB, DPIIT, Parliament answers, Make in India) and press reports, each labelled. The news list is hand-curated.',
     'Last updated date is shown in the footer (set when the site is built).' ] },
 ];
 

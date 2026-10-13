@@ -16,7 +16,7 @@ export default function Startups() {
       <section className="wrap block">
         <span className="eyebrow">Your turn</span>
         <h2>Building something in India?</h2>
-        <p className="lede">Tell us about it. Submissions are stored securely and reviewed — nothing is published automatically.</p>
+        <p className="lede">Tell us about it. This is a demonstration form: nothing is stored or published automatically.</p>
         <QueryForm mode="apply" />
       </section>
     </>

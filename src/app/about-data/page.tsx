@@ -18,16 +18,15 @@ export default function AboutData() {
         </table>
         <h2 style={{ marginTop: 32 }}>News articles</h2>
         <ul>
-          <li>Once a day, a polite crawler collects the title, a short excerpt, the date and the link of Invest India blog and news pages. It obeys the site&apos;s robots.txt, identifies itself, waits between requests and limits how many pages it fetches.</li>
-          <li>Only the headline and a short excerpt are stored; full text is never copied. Every item is credited to its source and links to the original.</li>
-          <li>Articles are filtered by sector keywords and de-duplicated. Because collection happens once a day, this is <b>not</b> a real-time feed; the last successful update time is shown on every view.</li>
-          <li>Invest India publishes blogs and features rather than breaking news, so some sectors may show few or no articles. We do not fill gaps with made-up items.</li>
-          <li>Where configured, official Press Information Bureau releases can also be mixed in and tagged &ldquo;Govt release&rdquo;.</li>
+          <li>The news pages show a short, hand-picked list of real articles. Each item shows the publisher&apos;s title, the source, the date (or &ldquo;Date not available&rdquo; if we do not know it) and a link to the original.</li>
+          <li>Nothing is fetched while you browse and no news service or key is used. The list is updated by editing one file, and the review date is shown on every feed.</li>
+          <li>Because the list is small, some sectors have few or no items. We do not fill gaps with made-up stories.</li>
+          <li>Articles without a known date appear only under &ldquo;All&rdquo;, never in the Weekly/Monthly/Quarterly/Yearly tabs.</li>
         </ul>
         <h2 style={{ marginTop: 32 }}>Startup stories</h2>
         <p>Every line is traceable to a linked source with a retrieval date. A story is marked verified only after the author has checked each line.</p>
         <h2 style={{ marginTop: 32 }}>Privacy</h2>
-        <p>Form entries are stored in a private database, used only to respond to you, and are not shown publicly.</p>
+        <p>This website has no database and stores nothing you type. The forms only check your entries in your browser.</p>
       </div>
     </>
   );

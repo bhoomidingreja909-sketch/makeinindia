@@ -9,7 +9,7 @@ export default function News() {
       <div className="page-head"><div className="wrap">
         <span className="eyebrow">News dashboard</span>
         <h1>Latest headlines, by sector</h1>
-        <p className="lede">Articles are collected once a day from public pages and credited to their source. They are <em>not</em> live, so each view shows when it last updated.</p>
+        <p className="lede">These are curated, sourced articles with links to the original. The list is reviewed by hand and is <em>not</em> a live feed.</p>
       </div></div>
       <div className="wrap block"><NewsDashboard /></div>
     </>

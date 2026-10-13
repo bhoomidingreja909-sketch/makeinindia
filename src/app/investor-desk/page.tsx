@@ -26,7 +26,7 @@ export default function InvestorDesk() {
         <div className="grid cols-3">
           <div className="card"><h3>1 · Understand the rules</h3><p>Check the FDI route and prohibited sectors, and how your IP is protected.</p><Link className="btn" href="/policies">See policies</Link></div>
           <div className="card"><h3>2 · Set up your company</h3><p>The registration path, step by step (below).</p><a className="btn" href="#register">See the steps</a></div>
-          <div className="card"><h3>3 · Talk to the desk</h3><p>Send your question. It is handled here — no redirect to another website.</p><Link className="btn" href="/contact">Contact the desk</Link></div>
+          <div className="card"><h3>3 · Talk to the desk</h3><p>Use the contact form — it stays on this site and never redirects you elsewhere.</p><Link className="btn" href="/contact">Contact the desk</Link></div>
         </div>
       </section>
 

@@ -1,36 +1,58 @@
 'use client';
 import { useState } from 'react';
 import { SECTORS } from '@/data/sectors';
+import { CONTACT_EMAIL } from '@/data/site';
+import { applySchema, contactSchema, toMailto } from '@/lib/forms';
 
 type Mode = 'contact' | 'apply';
-type Result = { kind: 'idle' } | { kind: 'sending' } | { kind: 'ok'; message: string } | { kind: 'err'; message: string; fields?: Record<string, string[]> };
+type Result =
+  | { kind: 'idle' }
+  | { kind: 'err'; fields: Record<string, string> }
+  | { kind: 'ok'; data: Record<string, unknown>; subject: string };
 
 export default function QueryForm({ mode, defaultCategory = 'investment' }: { mode: Mode; defaultCategory?: string }) {
   const [res, setRes] = useState<Result>({ kind: 'idle' });
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget;
-    const fd = Object.fromEntries(new FormData(form).entries());
-    const payload = { ...fd, consent: fd.consent === 'on' };
-    setRes({ kind: 'sending' });
-    try {
-      const r = await fetch(mode === 'contact' ? '/api/contact' : '/api/apply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-      const body = await r.json().catch(() => ({ message: 'Unexpected response.' }));
-      if (r.ok) { setRes({ kind: 'ok', message: body.message }); form.reset(); }
-      else setRes({ kind: 'err', message: body.message ?? 'Something went wrong.', fields: body.fields });
-    } catch {
-      setRes({ kind: 'err', message: 'Network error. Please check your connection and try again.' });
+    const raw = Object.fromEntries(new FormData(e.currentTarget).entries());
+    // Honeypot: a real visitor leaves this empty. Pretend success to bots without doing anything.
+    if (raw.website) { setRes({ kind: 'ok', data: {}, subject: '' }); return; }
+    const payload = { ...raw, consent: raw.consent === 'on' };
+    delete (payload as Record<string, unknown>).website;
+    const parsed = (mode === 'contact' ? contactSchema : applySchema).safeParse(payload);
+    if (!parsed.success) {
+      const fields: Record<string, string> = {};
+      for (const i of parsed.error.issues) fields[String(i.path[0])] ??= i.message;
+      setRes({ kind: 'err', fields });
+      return;
     }
+    const subject = mode === 'contact' ? `Make in India redesign — ${String((parsed.data as { category: string }).category)} query` : 'Startup submission — Make in India redesign';
+    setRes({ kind: 'ok', data: parsed.data as Record<string, unknown>, subject });
   }
 
-  const fe = (k: string) => (res.kind === 'err' && res.fields?.[k]?.[0]) || null;
+  const fe = (k: string) => (res.kind === 'err' && res.fields[k]) || null;
 
-  if (res.kind === 'ok') return <div className="ok" role="status"><b>Received.</b> {res.message}</div>;
+  if (res.kind === 'ok') {
+    return (
+      <div className="ok" role="status">
+        <b>Details checked.</b>{' '}
+        {CONTACT_EMAIL ? (
+          <>
+            <p>Your message is ready. Press the button to open it as an email draft, then send it from your own mail app.</p>
+            <a className="btn" href={toMailto(CONTACT_EMAIL, res.subject, res.data)}>Open email draft</a>
+          </>
+        ) : (
+          <p>This is an academic demonstration: <b>nothing was sent or stored</b>. On a live site this form would deliver your message to the project team.</p>
+        )}
+        <p><button className="btn ghost" onClick={() => setRes({ kind: 'idle' })}>Fill the form again</button></p>
+      </div>
+    );
+  }
 
   return (
     <form className="stack" onSubmit={onSubmit} noValidate>
-      <p className="notice info" role="note">Academic project: your message goes to the project author, not to DPIIT, Invest India or any ministry. Please do not share confidential or sensitive information.</p>
+      <p className="notice info" role="note">Academic project: this form is a demonstration. It does not reach DPIIT, Invest India or any ministry, and nothing you type is stored on this website.</p>
       {mode === 'contact' ? (
         <>
           <label>Your name<input name="name" required autoComplete="name" />{fe('name') && <span className="err">{fe('name')}</span>}</label>
@@ -63,9 +85,9 @@ export default function QueryForm({ mode, defaultCategory = 'investment' }: { mo
         </>
       )}
       <div className="hp" aria-hidden><label>Leave this empty<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-      <label className="check"><input type="checkbox" name="consent" required /> I agree that my details may be stored to respond to this request. They are not shared with other websites.</label>
-      {res.kind === 'err' && <div className="notice" role="alert">{res.message}</div>}
-      <button className="btn" disabled={res.kind === 'sending'}>{res.kind === 'sending' ? 'Sending…' : mode === 'contact' ? 'Send query' : 'Submit my startup'}</button>
+      <label className="check"><input type="checkbox" name="consent" /> I understand this is a demonstration form.</label>
+      {fe('consent') && <span className="err">{fe('consent')}</span>}
+      <button className="btn">{mode === 'contact' ? 'Check my message' : 'Check my submission'}</button>
     </form>
   );
 }

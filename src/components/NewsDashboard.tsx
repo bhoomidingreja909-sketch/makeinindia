@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { MANUFACTURING, SERVICES } from '@/data/sectors';
 import NewsFeed from './NewsFeed';
 
-export default function NewsDashboard({ initial = 'aerospace-defence' }: { initial?: string }) {
+export default function NewsDashboard({ initial = '' }: { initial?: string }) {
   const [slug, setSlug] = useState(initial);
   const Chips = ({ label, items }: { label: string; items: typeof MANUFACTURING }) => (
     <>
@@ -17,6 +17,7 @@ export default function NewsDashboard({ initial = 'aerospace-defence' }: { initi
   );
   return (
     <div>
+      <div className="chips"><button className="chip" aria-pressed={slug === ''} onClick={() => setSlug('')}>🌐 All sectors</button></div>
       <Chips label="Manufacturing" items={MANUFACTURING} />
       <Chips label="Services" items={SERVICES} />
       <div className="card" style={{ marginTop: 8 }}><NewsFeed key={slug} sector={slug} /></div>

@@ -1,17 +1,18 @@
 # PRD — Make in India: Redesigned Portal (v0.1 DRAFT for approval)
 
-**Author:** Bhoomi (TY BBA) · **Subject:** Digital Marketing & AI · **Status:** APPROVED · v1.0 build complete (content-brief analysis integrated)
+**Author:** Bhoomi (TY BBA) · **Subject:** Digital Marketing & AI · **Status:** APPROVED · v1.1 — static build (no database, no API keys)
 **Stack (approved):** Next.js (App Router, TypeScript) + Supabase (Postgres) · server-side news route
 
 ---
 
-> **v1.0 — final. Decisions made since v0.1 (supersede anything below that says otherwise):**
-> 1. **Stack:** Next.js + Supabase, deployed on Vercel or Netlify (approved).
+> **v1.1 — final. Decisions made since v0.1 (supersede anything below that says otherwise):**
+> 1. **Stack:** Next.js exported as a **fully static website** (plain HTML), hosted free on Netlify or Vercel. **No Supabase, no news API, no crawler, no server code, no keys.**
 > 2. **Palette:** #BA1200 · #031927 · #9DD1F1 · #508AA8 · #C8E0F4 (author-specified, §8).
-> 3. **News source:** no news API key. The primary source is a **polite once-a-day crawl of Invest India blog/news pages** (robots.txt allows it), stored in Supabase (§7.4). GNews and the PIB feed are **optional** extras (leave the keys blank to disable).
-> 4. **Content brief** supplied by the author was cross-checked and integrated (§2.4).
-> 5. **Not done / deliberately empty:** sector statistics, "why invest", growth drivers, brochures, PLI sector-wise outlays, official contact details and state profiles are shown as "not added yet — needs a verified source". All startup stories are marked "Draft — verify" until the author checks them.
-> 6. **Secrets:** no key or password is stored in the repository. Keys that were pasted in chat must be rotated and kept only in `.env.local`, the hosting dashboard and GitHub secrets.
+> 3. **News:** a **hand-curated list of real, sourced articles** in one data file (`src/data/news.ts`): publisher title, link, date only if known. Undated items appear only under "All". Not a live feed, and the pages say so. (§7 describes earlier options that were dropped.)
+> 4. **Forms:** demonstration only — they validate in the browser and store nothing. Optional: set a contact email at build time to offer a pre-filled email draft.
+> 5. **Content brief** supplied by the author was cross-checked and integrated (§2.4).
+> 6. **Deliberately empty:** sector statistics, "why invest", growth drivers, brochures, PLI sector-wise outlays, official contact details and state profiles show "not added yet — needs a verified source". All startup stories are "Draft — verify" until the author checks them.
+> 7. **Security:** nothing secret exists in the project, so there is nothing to leak. Keys pasted into chat earlier should still be rotated/deleted in their dashboards.
 
 ## 0. How to read this document (evidence labels)
 
@@ -124,7 +125,8 @@ User accounts, payments, multi-language (stretch goal), live chat, scraping of a
 
 ---
 
-## 7. Live sector news dashboard
+## 7. Sector news dashboard
+> **Superseded by v1.1 decision 3.** The server-side provider, cache and crawler designs below were built and then **removed** at the author's request to eliminate setup failures. What ships is the curated static list. The sections are kept as design history.
 
 ### 7.1 Why it needs a server
 Browser calls would expose the key and hit CORS/rate limits. Solution: Next.js Route Handler `GET /api/news?sector=<slug>&range=<week|month|quarter|year>&q=<text>`. **No separate backend, DB-scheduled job or extra service is required for v1**; caching uses an in-memory/`unstable_cache` layer plus a Supabase `news_cache` table so cache survives serverless cold starts (Supabase is already needed for forms).
@@ -164,7 +166,8 @@ Contrast rules (computed, WCAG AA): red on near-white ≈ 6.6:1 → fine for tex
 
 Formal-but-quirky: serif display headings, navy hero with a steel ring, hand-drawn wavy/scribble underlines, tilted "sticker" badges, sector emoji icons that wiggle on hover, a scrolling sector marquee, cursor-tilt policy cards. Accessible: skip link, visible focus, keyboard-operable slide-over (Esc closes), `prefers-reduced-motion` respected, responsive from 360 px (verified: no horizontal overflow at 375 px).
 
-## 9. Data model (Supabase)
+## 9. Data model
+> **Superseded by v1.1:** there is no database. Content lives in typed data files: `src/data/news.ts`, `content.ts`, `site.ts`, `sectors.ts`, `sectorMeta.ts`. The Supabase schema below is design history only.
 ```
 contact_queries(id uuid pk, name, email, phone null, organisation null, category enum, message, consent bool, created_at, status default 'new')
 startup_applications(id, founder_name, email, startup_name, sector_slug, stage, pitch text, created_at)
@@ -184,6 +187,7 @@ news_cache(key text pk, payload jsonb, fetched_at timestamptz, status)
 - **Blocked sources:** if a site blocks automated access, we do not bypass it. We flag it as missing, use the RSS/API route, or Bhoomi supplies the text manually (documented in `docs/data-register.md`).
 
 ## 11. Access register — what is blocked, why, what's needed
+> v1.1: the shipped site makes **no network calls at all** while browsing, so none of these hosts are needed at runtime. The register explains how the content was researched.
 | Host | Status from build environment | Why | Authorised alternative / need |
 |---|---|---|---|
 | makeinindia.com | Blocked (403 CONNECT / DNS) | Sandbox network allow-list | Search snippets (done); Bhoomi browser audit; or add host to allow-list |
@@ -202,7 +206,8 @@ news_cache(key text pk, payload jsonb, fetched_at timestamptz, status)
 - **AI use (transparent):** (a) keyword-expansion for sector queries; (b) AI-assisted short summaries of official text, labelled; (c) optional FAQ semantic search (stretch). AI never supplies facts.
 - **Before/after report:** PageSpeed + accessibility + link-leak count + content freshness.
 
-## 13. Implementation plan & files (to be created on approval)
+## 13. Implementation plan & files (as built, v1.1)
+> Server routes (`src/app/api/*`), `src/lib/news/*`, `src/lib/ingest/*`, `src/lib/supabase.ts`, `supabase/` and the ingest workflow listed in earlier drafts were removed. The static build outputs to `out/`.
 ```
 package.json, next.config.ts, tsconfig.json, .env.example, .gitignore (.env*), README.md
 src/app/(layout/pages): layout.tsx, page.tsx, sectors/, news/, investor-desk/, policies/{ipr,fdi}/, startups/, articles/, faq/, contact/, about-data/
@@ -218,7 +223,7 @@ docs/{data-register.md, audit-template.md}
 ```
 Milestones: M1 scaffold+design system → M2 sectors+news API (mocked) → M3 policies+investor desk → M4 stories+FAQ+forms+Supabase → M5 SEO/analytics/tests → M6 report assets.
 
-**Run commands:** `npm install` · copy `.env.example` → `.env.local` and fill `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `NEXT_PUBLIC_SITE_URL`, `INGEST_CONTACT` · run both SQL files in `supabase/migrations/` · `npm run ingest -- --dry` then `npm run ingest` · `npm run dev` (http://localhost:3000) · `npm test` · `npm run lint` · `npm run check:links`. Production: set the same variables in Vercel/Netlify, and the three crawler secrets in GitHub → Settings → Secrets → Actions.
+**Run commands:** `npm install` · `npm run dev` (http://localhost:3000) · `npm test` · `npm run lint` · `npm run check:links` · `npm run build` (writes the website to `out/`). **Get a link:** drag `out/` onto https://app.netlify.com/drop, or import the GitHub repo into Netlify/Vercel (no environment variables).
 
 ## 14. Risks
 | Risk | Mitigation |
@@ -231,13 +236,13 @@ Milestones: M1 scaffold+design system → M2 sectors+news API (mocked) → M3 po
 
 ## 15. Decisions (all resolved)
 1. Service-sector names confirmed by the author (12).
-2. News source: daily Invest India crawl; no news-API key (§7.4).
+2. News source: hand-curated static list; no API, database or crawler (v1.1).
 3. Deployment: non-commercial college demo on Vercel or Netlify.
 4. Startup candidates: five proposed (Agnikul Cosmos, Skyroot Aerospace, ideaForge, Zetwerk, Ather Energy) — **author must verify each line against its sources** before marking `verified: true`.
 5. Colours and typography: author palette applied (§8).
 6. PRD approved; build complete.
 
-**Open items for the author before submission:** read Invest India's Terms of Use; run the crawler's `--dry` run and share the output; verify all "Draft — verify" content; fill the intentionally empty sections from official documents; rotate exposed keys.
+**Open items for the author before submission:** verify all "Draft — verify" content (startup stories first); add more curated news items; fill the intentionally empty sections from official documents; delete/rotate the Supabase and GNews keys pasted earlier in chat; optionally set `NEXT_PUBLIC_CONTACT_EMAIL`.
 
 ## Sources consulted (search snippets only; pages not fully readable here)
 - makeinindia.com/sectors, /policy/foreign-direct-investment, /policy/intellectual-property-facts, /about

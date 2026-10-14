@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: 'Articles', description: 'Short, prac
 export default function Articles() {
   return (
     <>
-      <div className="page-head"><div className="wrap"><span className="eyebrow">Articles</span><h1>Short reads for founders</h1><p className="lede">Practical lists, hosted here — they no longer send you to another site.</p></div></div>
+      <div className="page-head"><div className="wrap"><h1>Short reads for founders</h1><p className="lede">Practical lists, hosted here — they no longer send you to another site.</p></div></div>
       <div className="wrap block grid cols-3">
         {ARTICLES.map((a) => (
           <article key={a.slug} className="card">

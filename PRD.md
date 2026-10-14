@@ -7,7 +7,7 @@
 
 > **v1.1 — final. Decisions made since v0.1 (supersede anything below that says otherwise):**
 > 1. **Stack:** Next.js exported as a **fully static website** (plain HTML), hosted free on Netlify or Vercel. **No Supabase, no news API, no crawler, no server code, no keys.**
-> 2. **Palette:** #BA1200 · #031927 · #9DD1F1 · #508AA8 · #C8E0F4 (author-specified, §8).
+> 2. **Palette and identity:** #BA1200 · #031927 · #9DD1F1 · #508AA8 · #C8E0F4 (author-specified, §8). The **Make in India lion-of-gears logo** (supplied by the author) is used in the header, hero, footer, favicon, social-share image, 404 page and brand kit, with a credit that it is Government of India (DPIIT) property shown for academic illustration only. The design was made more **corporate and formal**: white header, flat cards, monogram sector tiles instead of emoji, no decorative animation, shorter pages (empty sector sections are grouped into one "Not yet available" note).
 > 3. **News:** a **hand-curated list of real, sourced articles** in one data file (`src/data/news.ts`): publisher title, link, date only if known. Undated items appear only under "All". Not a live feed, and the pages say so. (§7 describes earlier options that were dropped.)
 > 4. **Forms:** demonstration only — they validate in the browser and store nothing. Optional: set a contact email at build time to offer a pre-filled email draft.
 > 5. **Content brief** supplied by the author was cross-checked and integrated (§2.4).
@@ -159,7 +159,8 @@ Browser calls would expose the key and hit CORS/rate limits. Solution: Next.js R
 ### 7.4 Daily Invest India ingest — now the PRIMARY news source (author's decision: no news API key)
 `robots.txt` of investindia.gov.in was checked by the author: `User-agent: *` / `Allow: /` with a sitemap. A scheduled job (GitHub Actions, daily) reads the sitemap, fetches up to 30 new article pages, and stores title + ≤220-character excerpt + date + link in `ingested_articles` (Supabase). Items are credited to Invest India and tagged "Govt release". Guardrails: honours robots.txt and fails closed if unreadable; identifying User-Agent; 1.5 s delay; page cap; no invented dates; no full text. The author must also read Invest India's Terms of Use (not yet checked). The author decided not to use a paid/limited news API, so GNews is now an optional extra (blank key = disabled). Consequences, stated honestly: Invest India publishes blogs/features rather than breaking news, so many sectors will show few articles; the feed is daily, not real-time; and the UI says so.
 
-## 8. Design language (UPDATED — author-specified palette)
+## 8. Design language (UPDATED — author palette, v1.2 corporate pass)
+**v1.2:** formal, corporate styling — white header with logo and text navigation, navy hero with the white logo, 6 px corners, no shadows or tilt beyond a subtle policy-card cursor effect, text monograms (AD, RL, ESDM…) for sectors, no emoji, no marquee. The older "quirky" notes below are superseded.
 Palette chosen by the author: **#BA1200** (red, accent/CTA) · **#031927** (deep navy, header/hero/text) · **#9DD1F1** (sky) · **#508AA8** (steel) · **#C8E0F4** (mist). `#F6FAFD` is a derived near-white tint of mist used as the page background. Saffron/green from v0.1 were removed.
 
 Contrast rules (computed, WCAG AA): red on near-white ≈ 6.6:1 → fine for text and buttons; steel on near-white ≈ 3.7:1 → large text/decoration only; red *text* on navy ≈ 2.7:1 → not allowed, so on dark surfaces red is used only as a button/underline fill with white text.

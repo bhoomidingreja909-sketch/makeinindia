@@ -11,13 +11,11 @@ export default function Schemes() {
   return (
     <>
       <div className="page-head"><div className="wrap">
-        <span className="eyebrow">Schemes &amp; incentives</span>
         <h1>Support for people who build</h1>
         <p className="lede">Production Linked Incentive (PLI) schemes cover 14 key sectors with a total outlay of ₹1.97 lakh crore. <a href={PLI_SOURCE.url} target="_blank" rel="noopener noreferrer">PIB ↗</a></p>
       </div></div>
 
       <section className="wrap block" id="finder">
-        <span className="eyebrow">Incentive finder</span>
         <h2>Which schemes match you?</h2>
         <IncentiveFinder />
       </section>

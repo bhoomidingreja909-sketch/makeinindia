@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import { STATS, type Stat } from '@/data/site';
 import EvidenceBadge from './EvidenceBadge';
 
-function useCount(target: number, decimals: number) {
+function useCount(target: number, decimals: number, animate = true) {
   const ref = useRef<HTMLDivElement>(null);
   const [v, setV] = useState(target); // server render and no-JS show the real number
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    if (!animate || !el || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
     setV(0);
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
@@ -28,10 +28,10 @@ function useCount(target: number, decimals: number) {
 }
 
 function Card({ s }: { s: Stat }) {
-  const { ref, text } = useCount(s.value, s.decimals ?? 0);
+  const { ref, text } = useCount(s.value, s.decimals ?? 0, s.id !== 'launch');
   return (
     <div className="stat" ref={ref}>
-      <div className="big" aria-label={`${s.prefix ?? ''}${s.value}${s.suffix ?? ''}`}>{s.prefix}{s.id === 'launch' ? Math.round(Number(text)) : text}{s.suffix}</div>
+      <div className="big" aria-label={`${s.prefix ?? ''}${s.value}${s.suffix ?? ''}`}>{s.prefix}{text}{s.suffix}</div>
       <strong>{s.label}</strong>
       <p style={{ margin: '6px 0' }} className="meta">{s.note}</p>
       <p className="src">

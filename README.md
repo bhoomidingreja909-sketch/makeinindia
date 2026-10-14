@@ -30,6 +30,9 @@ npm run build      # writes the finished website to ./out
 
 **Forms:** they are a demonstration — they validate your entries and store nothing. To let visitors open a pre-filled email draft, set `NEXT_PUBLIC_CONTACT_EMAIL` as a build environment variable (Netlify/Vercel → Environment variables) and redeploy. Leave it empty for demo mode.
 
+## Logo and brand
+Logo files are in `public/brand/` (dark and white PNGs). The favicon, touch icon and social-share image are `src/app/icon.png`, `apple-icon.png` and `opengraph-image.png`. The Make in India logo belongs to the Government of India (DPIIT); it is used for academic illustration only and the site says so.
+
 ## What's in the site
 Home (sourced stats, pillars, sector explorer, carousel) · About (timeline) · Sectors (27, filterable, news slide-over) · Sector pages (11-part template + curated headlines) · Schemes & Incentives (PLI table, incentive finder) · Investor Desk · States & UTs · Policies (IPR / FDI with Expand All) · Startup Stories (filters) · News · Resources (+ brand kit) · Articles · FAQ (+ retrieval assistant) · Contact / Feedback (demo) · Site search · HTML sitemap · 11 policy/help pages. Accessibility: skip link, breadcrumbs, text size, dark and high-contrast themes, EN/हिं toggle, reduced-motion support.
 

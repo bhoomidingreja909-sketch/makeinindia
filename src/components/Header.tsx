@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SITE } from '@/data/site';
+import Logo from './Logo';
 import { T, useT, usePrefs, type Theme } from './Prefs';
 
 const LINKS = [
@@ -28,37 +29,34 @@ export default function Header() {
 
   return (
     <>
-      <div className="banner" role="note"><T id="banner" en={SITE.banner} /></div>
       <div className="util">
         <div className="wrap">
-          <form role="search" onSubmit={(e) => { e.preventDefault(); if (q.trim()) router.push(`/search?q=${encodeURIComponent(q.trim())}`); }}>
-            <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('search.ph', 'Search the site…')} aria-label={t('search', 'Search')} />
-            <button type="submit"><T id="search" en="Search" /></button>
-          </form>
-          <div className="grp" role="group" aria-label="Text size">
-            <button onClick={() => step(-10)} aria-label="Decrease text size" disabled={size <= 85}>A−</button>
-            <button onClick={() => setSize(100)} aria-label="Reset text size">A</button>
-            <button onClick={() => step(10)} aria-label="Increase text size" disabled={size >= 150}>A+</button>
-          </div>
-          <label className="grp" style={{ display: 'flex', fontWeight: 400 }}>
-            <span className="sr" style={{ position: 'absolute', left: -9999 }}>Theme</span>
+          <span className="disclaimer" role="note"><T id="banner" en={SITE.banner} /></span>
+          <div className="tools">
+            <form role="search" onSubmit={(e) => { e.preventDefault(); if (q.trim()) router.push(`/search/?q=${encodeURIComponent(q.trim())}`); }}>
+              <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('search.ph', 'Search the site…')} aria-label={t('search', 'Search')} />
+              <button type="submit"><T id="search" en="Search" /></button>
+            </form>
+            <div className="grp" role="group" aria-label="Text size">
+              <button onClick={() => step(-10)} aria-label="Decrease text size" disabled={size <= 85}>A−</button>
+              <button onClick={() => setSize(100)} aria-label="Reset text size">A</button>
+              <button onClick={() => step(10)} aria-label="Increase text size" disabled={size >= 150}>A+</button>
+            </div>
             <select value={theme} onChange={(e) => setTheme(e.target.value as Theme)} aria-label="Theme">
               <option value="light">{t('theme.light', 'Light')}</option>
               <option value="dark">{t('theme.dark', 'Dark')}</option>
               <option value="contrast">{t('theme.contrast', 'High contrast')}</option>
             </select>
-          </label>
-          <div className="grp" role="group" aria-label="Language">
-            <button aria-pressed={lang === 'en'} onClick={() => setLang('en')} lang="en">EN</button>
-            <button aria-pressed={lang === 'hi'} onClick={() => setLang('hi')} lang="hi">हिं</button>
+            <div className="grp" role="group" aria-label="Language">
+              <button aria-pressed={lang === 'en'} onClick={() => setLang('en')} lang="en">EN</button>
+              <button aria-pressed={lang === 'hi'} onClick={() => setLang('hi')} lang="hi">हिं</button>
+            </div>
           </div>
         </div>
       </div>
       <header className="site-header">
         <div className="wrap">
-          <Link href="/" className="brand" onClick={() => setOpen(false)}>
-            <span className="brand-mark" aria-hidden>⚙</span> Make in India
-          </Link>
+          <Link href="/" className="brand" onClick={() => setOpen(false)} aria-label="Make in India — home"><Logo height={62} /></Link>
           <button className="menu-btn" aria-expanded={open} aria-controls="nav" onClick={() => setOpen((o) => !o)}>
             {open ? <T id="close" en="Close" /> : <T id="menu" en="Menu" />}
           </button>

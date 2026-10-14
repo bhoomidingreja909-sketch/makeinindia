@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'Contact the Investor Desk', descript
 export default function Contact() {
   return (
     <>
-      <div className="page-head"><div className="wrap"><span className="eyebrow">Contact</span><h1>Ask the Investor Desk</h1><p className="lede">A demonstration form: it checks your details and, if enabled, opens an email draft. Nothing is stored on this website.</p></div></div>
+      <div className="page-head"><div className="wrap"><h1>Ask the Investor Desk</h1><p className="lede">A demonstration form: it checks your details and, if enabled, opens an email draft. Nothing is stored on this website.</p></div></div>
       <div className="wrap block grid cols-2" style={{ alignItems: 'start' }}>
         <QueryForm mode="contact" />
         <aside className="card">

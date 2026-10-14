@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'About our data', description: 'Where
 export default function AboutData() {
   return (
     <>
-      <div className="page-head"><div className="wrap"><span className="eyebrow">Transparency</span><h1>About our data</h1><p className="lede">This is a student project. We separate what is verified from what is AI-assisted analysis.</p></div></div>
+      <div className="page-head"><div className="wrap"><h1>About our data</h1><p className="lede">This is a student project. We separate what is verified from what is AI-assisted analysis.</p></div></div>
       <div className="wrap block" style={{ maxWidth: 820 }}>
         <h2>How to read the labels</h2>
         <table className="t">

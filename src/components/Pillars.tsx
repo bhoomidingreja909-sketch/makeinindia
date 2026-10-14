@@ -6,12 +6,12 @@ export default function Pillars() {
   const [open, setOpen] = useState<string | null>(null);
   return (
     <div className="pillars">
-      {PILLARS.map((p) => (
+      {PILLARS.map((p, i) => (
         <button key={p.id} className="pillar" aria-expanded={open === p.id} onClick={() => setOpen(open === p.id ? null : p.id)}>
-          <span className="glyph" aria-hidden>{p.glyph}</span>
+          <span className="pnum" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
           <h3>{p.title}</h3>
           <p>{p.text}</p>
-          <span className="go" style={{ color: 'var(--link)', fontWeight: 700, fontSize: '0.85rem' }}>{open === p.id ? 'Hide' : 'Tap to read'}</span>
+          <span className="go" style={{ color: 'var(--link)', fontWeight: 700, fontSize: '0.85rem' }}>{open === p.id ? 'Hide' : 'Read'}</span>
         </button>
       ))}
     </div>

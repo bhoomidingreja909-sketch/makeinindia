@@ -19,7 +19,6 @@ export default async function PolicyPage({ params }: { params: Promise<{ slug: s
   return (
     <>
       <div className="page-head"><div className="wrap">
-        <span className="eyebrow">Policy</span>
         <h1>{d.title}</h1>
         <p className="lede">{d.tagline}</p>
       </div></div>

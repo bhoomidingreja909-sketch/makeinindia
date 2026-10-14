@@ -24,7 +24,7 @@ export default function StoryGrid() {
             <article key={s.slug} id={s.slug} className="card">
               <div className="meta" style={{ marginBottom: 8 }}>
                 <EvidenceBadge kind={s.verified ? 'verified' : 'draft'} />
-                {sec && <span>{sec.icon} {sec.name}</span>}<span>· {s.state}</span>
+                {sec && <span>{sec.name}</span>}<span>· {s.state}</span>
               </div>
               <h2 style={{ fontSize: '1.5rem' }}>{s.name}</h2>
               <p><em>{s.headline}</em></p>

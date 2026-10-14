@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'Feedback', description: 'Tell us wha
 export default function Feedback() {
   return (
     <>
-      <div className="page-head"><div className="wrap"><span className="eyebrow">Feedback</span><h1>Help us improve</h1><p className="lede">Report a mistake, a missing source or an accessibility barrier.</p></div></div>
+      <div className="page-head"><div className="wrap"><h1>Help us improve</h1><p className="lede">Report a mistake, a missing source or an accessibility barrier.</p></div></div>
       <div className="wrap block"><QueryForm mode="contact" defaultCategory="feedback" /></div>
     </>
   );

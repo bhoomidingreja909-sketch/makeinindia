@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'States & Union Territories', descrip
 export default function States() {
   return (
     <>
-      <div className="page-head"><div className="wrap"><span className="eyebrow">Invest in India</span><h1>28 states. 8 Union Territories.</h1><p className="lede">Select one to see the cited facts we have. No figure is shown without a source.</p></div></div>
+      <div className="page-head"><div className="wrap"><h1>28 states. 8 Union Territories.</h1><p className="lede">Select one to see the cited facts available.</p></div></div>
       <div className="wrap block"><StateExplorer /></div>
     </>
   );

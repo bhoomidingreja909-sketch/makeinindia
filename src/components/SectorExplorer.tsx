@@ -51,7 +51,7 @@ export default function SectorExplorer() {
           <div className="scrim" onClick={() => setActive(null)} />
           <aside className="panel" role="dialog" aria-modal="true" aria-label={`${active.name} news`}>
             <div className="panel-head">
-              <div><span style={{ fontSize: '1.6rem' }} aria-hidden>{active.icon}</span><h2>{active.name}</h2></div>
+              <div><h2>{active.name}</h2></div>
               <button className="close" onClick={() => setActive(null)} autoFocus>Close ✕</button>
             </div>
             <div className="panel-body"><NewsFeed sector={active.slug} /><p style={{ marginTop: 20 }}><a href={`/sectors/${active.slug}`}>Open the full {active.name} page →</a></p></div>

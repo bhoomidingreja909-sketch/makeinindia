@@ -7,9 +7,8 @@ export default function Sectors() {
   return (
     <>
       <div className="page-head"><div className="wrap">
-        <span className="eyebrow">Sectors</span>
         <h1>27 sectors. Pick one.</h1>
-        <p className="lede">Select a tile to open its headlines — switch between weekly, monthly, quarterly and yearly views.</p>
+        <p className="lede">Select a sector to see its curated news.</p>
       </div></div>
       <div className="wrap block"><SectorExplorer /></div>
     </>

@@ -18,7 +18,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
   if (!p) notFound();
   return (
     <>
-      <div className="page-head"><div className="wrap"><span className="eyebrow">Policies &amp; help</span><h1>{p.title}</h1></div></div>
+      <div className="page-head"><div className="wrap"><h1>{p.title}</h1></div></div>
       <div className="wrap block" style={{ maxWidth: 760 }}>
         {p.body.map((t) => <p key={t}>{t}</p>)}
         <p className="meta">Questions? <Link href="/contact">Contact</Link> · <Link href="/feedback">Feedback</Link></p>

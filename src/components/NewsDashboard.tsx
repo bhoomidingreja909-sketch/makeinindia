@@ -10,7 +10,7 @@ export default function NewsDashboard({ initial = '' }: { initial?: string }) {
       <h3>{label}</h3>
       <div className="chips">
         {items.map((s) => (
-          <button key={s.slug} className="chip" aria-pressed={slug === s.slug} onClick={() => setSlug(s.slug)}>{s.icon} {s.name.replace(/ \(.*\)| &.*/, '')}</button>
+          <button key={s.slug} className="chip" aria-pressed={slug === s.slug} onClick={() => setSlug(s.slug)}>{s.name.replace(/ \(.*\)| &.*/, '')}</button>
         ))}
       </div>
     </>

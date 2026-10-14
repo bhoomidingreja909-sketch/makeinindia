@@ -24,11 +24,11 @@ export const STATS: Stat[] = [
     source: { name: 'Business Standard — FDI inflows', url: 'https://www.business-standard.com/topic/fdi-inflows' } },
 ];
 
-export const PILLARS: { id: string; title: string; text: string; glyph: string }[] = [
-  { id: 'processes', title: 'New Processes', glyph: '🧩', text: 'Treat ease of doing business as the single most important factor in promoting entrepreneurship.' },
-  { id: 'infrastructure', title: 'New Infrastructure', glyph: '🛣️', text: 'Industrial corridors and smart cities, with modern communication and integrated logistics.' },
-  { id: 'sectors', title: 'New Sectors', glyph: '🌱', text: 'FDI opened up in sectors such as defence production, insurance, medical devices, construction and railway infrastructure.' },
-  { id: 'mindset', title: 'New Mindset', glyph: '🤝', text: 'Government as a facilitator and partner to industry rather than a regulator.' },
+export const PILLARS: { id: string; title: string; text: string }[] = [
+  { id: 'processes', title: 'New Processes', text: 'Treat ease of doing business as the single most important factor in promoting entrepreneurship.' },
+  { id: 'infrastructure', title: 'New Infrastructure', text: 'Industrial corridors and smart cities, with modern communication and integrated logistics.' },
+  { id: 'sectors', title: 'New Sectors', text: 'FDI opened up in sectors such as defence production, insurance, medical devices, construction and railway infrastructure.' },
+  { id: 'mindset', title: 'New Mindset', text: 'Government as a facilitator and partner to industry rather than a regulator.' },
 ];
 export const PILLARS_SOURCE: Source = { name: 'Vikaspedia — Make in India', url: 'https://vikaspedia.in/social-welfare/skill-development/make-in-india' };
 
@@ -123,7 +123,7 @@ export const RESOURCES: Resource[] = [
 export const PALETTE = [
   { name: 'Signal Red', hex: '#BA1200', use: 'Buttons, links, key accents (white text on top)' },
   { name: 'Deep Navy', hex: '#031927', use: 'Header, hero, body text' },
-  { name: 'Sky', hex: '#9DD1F1', use: 'Highlights, marquee, links on dark' },
+  { name: 'Sky', hex: '#9DD1F1', use: 'Highlights and links on dark backgrounds' },
   { name: 'Steel', hex: '#508AA8', use: 'Borders and large decoration only (3.7:1 on white)' },
   { name: 'Mist', hex: '#C8E0F4', use: 'Section backgrounds' },
 ];
@@ -144,7 +144,7 @@ export const LEGAL: LegalPage[] = [
   { slug: 'copyright', title: 'Copyright Policy', body: [
     'Original text, layout and code on this site are the author’s academic work. Facts and figures belong to their cited sources.',
     'Article titles and links belong to their publishers; we show the title, a short summary written by the author, credit the source, and always link to the original article.',
-    'We do not use the National Emblem or any government logo.' ] },
+    'The Make in India logo is the property of the Government of India (DPIIT) and is shown here only to illustrate this academic redesign; it does not imply any affiliation or endorsement. This site does not use the National Emblem.' ] },
   { slug: 'hyperlinking', title: 'Hyperlinking Policy', body: [
     'External links open in a new tab and are marked with ↗. We are not responsible for the content or availability of linked sites.',
     'The presence of a link is not an endorsement. Links to government portals are provided so you can verify information at the source.',
@@ -188,7 +188,7 @@ export const HI: Record<string, string> = {
   'banner': 'शैक्षणिक पुनर्रचना परियोजना। यह भारत सरकार की आधिकारिक वेबसाइट नहीं है।',
   'skip': 'मुख्य सामग्री पर जाएँ', 'search': 'खोजें', 'search.ph': 'साइट में खोजें…', 'menu': 'मेनू', 'close': 'बंद करें',
   'theme.light': 'सामान्य', 'theme.dark': 'डार्क', 'theme.contrast': 'उच्च कंट्रास्ट',
-  'hero.h1a': 'भारत में निर्मित।', 'hero.h1b': 'एक ही स्थान पर', 'hero.h1c': 'समझिए।',
+  'hero.h1': 'भारत की विनिर्माण और निवेश यात्रा, एक ही स्थान पर',
   'hero.lede': '27 क्षेत्र, निवेश के नियम, और उन्हें बनाने वाले स्टार्टअप — ताज़ा सुर्खियों और हर तथ्य के स्रोत के साथ।',
   'cta.sectors': 'क्षेत्र देखें', 'cta.invest': 'भारत में निवेश करें', 'cta.stories': 'स्टार्टअप कहानियाँ पढ़ें', 'cta.contact': 'निवेशक डेस्क से संपर्क करें',
   'lang.note': 'नोट: हिंदी अभी केवल नेविगेशन और मुख्य लेबल के लिए उपलब्ध है; पृष्ठ की सामग्री अंग्रेज़ी में है।',

@@ -17,7 +17,6 @@ export default function InvestorDesk() {
   return (
     <>
       <div className="page-head"><div className="wrap">
-        <span className="eyebrow">Investor Desk</span>
         <h1>Want to build or invest in India?</h1>
         <p className="lede">Three paths. Pick the one that matches where you are.</p>
       </div></div>
@@ -31,7 +30,6 @@ export default function InvestorDesk() {
       </section>
 
       <section className="wrap block">
-        <span className="eyebrow">Investor Facilitation Cell</span>
         <h2>Support from first idea to after-care</h2>
         <p>The Investor Facilitation Cell, within Invest India, helps investors through three phases:</p>
         <div className="grid cols-3">
@@ -43,7 +41,6 @@ export default function InvestorDesk() {
       </section>
 
       <section id="register" className="wrap block">
-        <span className="eyebrow">Company registration</span>
         <h2>Six steps to a registered company</h2>
         <p className="notice">
           <EvidenceBadge kind="draft" /> This is an AI-assisted outline of the usual private-limited route. Forms and fees change — confirm each step on the{' '}

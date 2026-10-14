@@ -11,7 +11,6 @@ export default function About() {
   return (
     <>
       <div className="page-head"><div className="wrap">
-        <span className="eyebrow">About</span>
         <h1>What is Make in India?</h1>
         <p className="lede">A national programme launched on 25 September 2014 to facilitate investment, foster innovation, build best-in-class infrastructure and make India a hub for manufacturing, design and innovation. It also promotes entrepreneurship, not manufacturing alone.</p>
       </div></div>
@@ -38,7 +37,7 @@ export default function About() {
         <h2 style={{ marginTop: 32 }}>Who runs it</h2>
         <p>DPIIT (Ministry of Commerce &amp; Industry) and Invest India implement the programme, together with other ministries and state governments. The Investor Facilitation Cell within Invest India helps investors through pre-investment, execution and after-care.</p>
         <h2 style={{ marginTop: 32 }}>About the logo</h2>
-        <p>The original programme logo is a lion made of cogs. This redesign uses its own gear mark and does not use the National Emblem or any government logo.</p>
+        <p>The logo is a lion built from gears, symbolising strength and manufacturing. It is the property of the Government of India (DPIIT) and is shown here only for this academic redesign, without implying affiliation. Downloadable files and usage rules are in the <Link href="/resources#brand">brand kit</Link>.</p>
       </section>
     </>
   );

@@ -14,7 +14,7 @@ export default function Faq() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld).replace(/</g, '\\u003c') }} />
-      <div className="page-head"><div className="wrap"><span className="eyebrow">FAQ</span><h1>Questions people ask</h1><p className="lede">Grouped by topic. Each answer shows whether it is backed by an official page or is still a draft to verify.</p></div></div>
+      <div className="page-head"><div className="wrap"><h1>Questions people ask</h1><p className="lede">Grouped by topic. Each answer shows whether it is backed by an official page or is still a draft to verify.</p></div></div>
       <div className="wrap block" style={{ maxWidth: 860 }}>
         <FaqAssistant />
         <FaqList />

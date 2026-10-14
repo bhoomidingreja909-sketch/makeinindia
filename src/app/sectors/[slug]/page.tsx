@@ -16,10 +16,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return s ? { title: s.name, description: `Latest headlines, schemes and nodal department for ${s.name} in India.` } : {};
 }
 
-function Empty({ what }: { what: string }) {
-  return <p className="empty">{what} Not added yet — this needs a verified source (for example a DPIIT / Department of Commerce sector document or data.gov.in). We do not fill it with unsourced numbers.</p>;
-}
-
 export default async function SectorPage({ params }: { params: Promise<{ slug: string }> }) {
   const s = getSector((await params).slug);
   if (!s) notFound();
@@ -29,28 +25,21 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
   const coordinator = s.group === 'manufacturing' ? 'DPIIT' : 'the Department of Commerce';
 
   const sections: { title: string; body: React.ReactNode }[] = [
-    { title: 'Overview', body: <><p>{s.name} is one of the 27 Make in India 2.0 sectors — a {s.group === 'manufacturing' ? 'manufacturing' : 'service'} sector whose action plan is coordinated by {coordinator}.</p><p className="meta">Topics we track for headlines: {s.keywords.join(' · ')}</p></> },
-    { title: 'Key statistics', body: <Empty what="Sector statistics (output, exports, employment)." /> },
-    { title: 'Why invest', body: <Empty what="The investment case for this sector." /> },
-    { title: 'Growth drivers', body: <Empty what="Demand and policy drivers." /> },
+    { title: 'Overview', body: <><p>{s.name} is one of the 27 Make in India 2.0 sectors — a {s.group === 'manufacturing' ? 'manufacturing' : 'service'} sector whose action plan is coordinated by {coordinator}.</p><p className="meta">Topics tracked: {s.keywords.join(' · ')}</p></> },
     { title: 'Government policies & schemes', body: pli.length ? (
-      <><ul className="plain">{pli.map((p) => <li key={p.name}>{p.name} PLI scheme <EvidenceBadge kind={p.evidence} /></li>)}</ul><p className="meta">Source: <a href={PLI_SOURCE.url} target="_blank" rel="noopener noreferrer">{PLI_SOURCE.name} ↗</a>. See <Link href="/schemes">all schemes</Link>.</p></>
-    ) : <p>No PLI scheme in our list maps directly to this sector. See <Link href="/schemes">other initiatives</Link>.</p> },
-    { title: 'Incentives & support available', body: <p>Use the <Link href="/schemes#finder">incentive finder</Link> to see matches by sector and state. State-level incentives are set by each state.</p> },
-    { title: 'Investment opportunities & live projects', body: <>
-      {stories.length ? <><p>Startups and companies in this sector:</p><ul className="plain">{stories.map((x) => <li key={x.slug}><Link href={`/startups#${x.slug}`}>{x.name}</Link> — {x.headline} <EvidenceBadge kind={x.verified ? 'verified' : 'draft'} /></li>)}</ul></> : <Empty what="Live projects and opportunities." />}
-    </> },
-    { title: 'Key contacts / nodal department', body: <><p>{meta.nodal} <EvidenceBadge kind="draft" /></p><p className="meta">Nodal bodies are AI-assisted and must be checked against the official annexure. For questions, <Link href="/contact">contact the desk</Link>.</p></> },
-    { title: 'Sector brochure (PDF)', body: <Empty what="An official sector brochure." /> },
-    { title: 'Sector FAQs', body: <p>General answers are on the <Link href="/faq">FAQ page</Link>; the <Link href="/faq">FAQ assistant</Link> finds the closest answer with its source.</p> },
-    { title: 'Related sectors', body: <ul className="chips" style={{ listStyle: 'none', padding: 0 }}>{meta.related.map((r) => { const x = getSector(r)!; return <li key={r}><Link className="chip" href={`/sectors/${r}`} style={{ textDecoration: 'none' }}>{x.icon} {x.name.replace(/ \(.*\)/, '')}</Link></li>; })}</ul> },
+      <><ul className="plain">{pli.map((p) => <li key={p.name}>{p.name} PLI scheme <EvidenceBadge kind={p.evidence} /></li>)}</ul><p className="meta">Source: <a href={PLI_SOURCE.url} target="_blank" rel="noopener noreferrer">{PLI_SOURCE.name} ↗</a> · <Link href="/schemes#finder">Incentive finder</Link></p></>
+    ) : <p>No PLI scheme in our list maps directly to this sector. See <Link href="/schemes">other initiatives</Link> or use the <Link href="/schemes#finder">incentive finder</Link>.</p> },
+    ...(stories.length ? [{ title: 'Companies and startups', body: <ul className="plain">{stories.map((x) => <li key={x.slug}><Link href={`/startups#${x.slug}`}>{x.name}</Link> — {x.headline} <EvidenceBadge kind={x.verified ? 'verified' : 'draft'} /></li>)}</ul> }] : []),
+    { title: 'Nodal department', body: <><p>{meta.nodal} <EvidenceBadge kind="draft" /></p><p className="meta">Verify against the official annexure. Questions? <Link href="/contact">Contact the desk</Link>.</p></> },
+    { title: 'Related sectors', body: <ul className="chips" style={{ listStyle: 'none', padding: 0, margin: 0 }}>{meta.related.map((r) => { const x = getSector(r)!; return <li key={r}><Link className="chip" href={`/sectors/${r}`} style={{ textDecoration: 'none' }}>{x.name.replace(/ \(.*\)/, '')}</Link></li>; })}</ul> },
   ];
+  const pendingItems = ['Key statistics', 'Why invest', 'Growth drivers', ...(stories.length ? [] : ['Live projects']), 'Sector brochure'];
 
   return (
     <>
       <div className="page-head"><div className="wrap">
-        <span className="eyebrow">{s.group === 'manufacturing' ? 'Manufacturing sector' : 'Service sector'}</span>
-        <h1><span aria-hidden>{s.icon}</span> {s.name}</h1>
+        <h1>{s.name}</h1>
+        <p className="lede">{s.group === 'manufacturing' ? 'Manufacturing sector' : 'Service sector'} · coordinated by {coordinator}</p>
       </div></div>
       <div className="wrap block">
         {sections.map((x, i) => (
@@ -60,9 +49,13 @@ export default async function SectorPage({ params }: { params: Promise<{ slug: s
           </section>
         ))}
         <section className="sector-sec" id="news">
-          <h2><span className="n">★</span>Latest headlines</h2>
+          <h2><span className="n">{sections.length + 1}</span>Curated news</h2>
           <NewsFeed sector={s.slug} />
         </section>
+        <div className="pending" role="note">
+          <strong>Not yet available</strong> — each needs a verified official source and is not filled with unsourced figures:
+          <ul>{pendingItems.map((x) => <li key={x}>{x}</li>)}</ul>
+        </div>
         <p style={{ marginTop: 24 }}><Link href="/sectors">← All sectors</Link></p>
       </div>
     </>

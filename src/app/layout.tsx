@@ -4,8 +4,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Providers from '@/components/Providers';
+import { siteUrl } from '@/lib/siteUrl';
 
-const site = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+const site = siteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(site),
